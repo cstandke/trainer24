@@ -10,8 +10,8 @@ class Signup extends Component {
       firstname: "",
       username: "",
       password: "",
-      email: "",
-      type: this.props.type
+      email: ""
+      // type: this.props.type
     };
     console.log(this.state.email);
   }
@@ -19,21 +19,17 @@ class Signup extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    const username = this.state.username;
-    const password = this.state.password;
-    const firstname = this.state.firstname;
-    const lastname = this.state.lastname;
-    const email = this.state.email;
-
+    const { username, password, firstname, lastname, email } = this.state;
     //if type = this.props.isTrainer > signup-trainer, else > signup-learner
+
     axios
       .post("http://localhost:5000/api/signup-trainer", {
         // type: this.props.isTrainer;
-        username: username,
-        password: password,
-        firstname: firstname,
-        lastname: lastname,
-        email: email
+        username,
+        password,
+        firstname,
+        lastname,
+        email
       })
       .then(response => {
         this.setState({
@@ -44,17 +40,18 @@ class Signup extends Component {
           email: ""
         });
         // this.props.getUser(response);
-      })
+      });
 
-      // this.service.signup(username, password)
-      // .then( response => {
-      //     this.setState({
-      //         username: "",
-      //         password: "",
-      //     });
-      //     // this.props.getUser(response)
-      // })
-      .catch(error => console.log(error));
+    // this.service
+    //   .signup(username, password)
+    //   .then(response => {
+    //     this.setState({
+    //       username: "",
+    //       password: ""
+    //     });
+    // this.props.getUser(response)
+    // })
+    // .catch(error => console.log(error));
   };
 
   handleChange = event => {
