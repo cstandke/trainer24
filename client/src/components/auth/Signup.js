@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
-// import axios from "axios";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Signup extends Component {
   constructor(props) {
@@ -9,41 +9,53 @@ class Signup extends Component {
       lastname: "",
       firstname: "",
       username: "",
-      password: ""
+      password: "",
+      email: "",
+      type: this.props.type
     };
+    console.log(this.state.email);
   }
 
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
+  handleFormSubmit = event => {
+    event.preventDefault();
 
-  //   const username = this.state.username;
-  //     const password = this.state.password;
-  //     const firstname = this.state.firstname;
-  //     const lastname = this.state.lastname;
+    const username = this.state.username;
+    const password = this.state.password;
+    const firstname = this.state.firstname;
+    const lastname = this.state.lastname;
+    const email = this.state.email;
 
-  //   axios
-  //     .post("http://localhost:5000/api/signup", {
-  //       username: username,
-  //       password: password
-  //     })
-  //     .then(response => {
-  //       this.setState({
-  //         username: "",
-  //         password: ""
-  //       });
-  //       this.props.getUser(response);
-  //     })
+    //if type = this.props.isTrainer > signup-trainer, else > signup-learner
+    axios
+      .post("http://localhost:5000/api/signup-trainer", {
+        // type: this.props.isTrainer;
+        username: username,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        email: email
+      })
+      .then(response => {
+        this.setState({
+          username: "",
+          password: "",
+          firstname: "",
+          lastname: "",
+          email: ""
+        });
+        // this.props.getUser(response);
+      })
 
-  //     // this.service.signup(username, password)
-  //     // .then( response => {
-  //     //     this.setState({
-  //     //         username: "",
-  //     //         password: "",
-  //     //     });
-  //     //     // this.props.getUser(response)
-  //     // })
-  //     .catch(error => console.log(error));
-  // };
+      // this.service.signup(username, password)
+      // .then( response => {
+      //     this.setState({
+      //         username: "",
+      //         password: "",
+      //     });
+      //     // this.props.getUser(response)
+      // })
+      .catch(error => console.log(error));
+  };
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -67,7 +79,7 @@ class Signup extends Component {
                   height="72"
                 />
                 <div className="form-group">
-                  <label>First Name:</label>
+                  <label>First name:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -77,7 +89,7 @@ class Signup extends Component {
                   />
                 </div>
                 <div class="form-group">
-                  <label>Last Name:</label>
+                  <label>Last name:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -97,6 +109,16 @@ class Signup extends Component {
                   />
                 </div>
                 <div class="form-group">
+                  <label>Email:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={this.state.email}
+                    onChange={e => this.handleChange(e)}
+                  />
+                </div>
+                <div class="form-group">
                   <label>Password:</label>
                   <input
                     type="text"
@@ -112,7 +134,7 @@ class Signup extends Component {
               </form>
               <p>
                 Already have account?
-                {/* <Link to={"/"}> Login</Link> */}
+                <Link to={"/"}>Login</Link>
               </p>
             </div>
           </div>
