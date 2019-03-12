@@ -24,10 +24,10 @@ router.post("/signup-trainer", (req, res, next) => {
 
   User.create({
     type: "trainer",
-    firstname: String,
-    lastname: String,
-    username: String,
-    email: String
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    username: req.body.username,
+    email: req.body.email
   })
     .then(response => {
       res.json(response);
