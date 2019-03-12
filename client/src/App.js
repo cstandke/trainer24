@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import Homepage from "../src/components/Homepage";
 import Navbar from "../src/components/Navbar";
 // import logo from "./logo.svg";
-// import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
 
 class App extends Component {
   render() {
@@ -13,14 +14,14 @@ class App extends Component {
         <Navbar />
         <Homepage />
         <Signup />
-        {/* <Switch> */}
-        {/* <Route
+        <Switch>
+          {/* <Route
             exact
             path="/signup"
             // render={() => <Signup getUser={this.getTheUser} />}
           /> */}
-        {/* <Route exact path="/projects" component={Signup} /> */}
-        {/* </Switch> */}
+          <Route exact path="/login" component={Login} />
+        </Switch>
       </div>
     );
   }
