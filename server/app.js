@@ -65,4 +65,7 @@ app.use("/api", require("./routes/auth"));
 const index = require("./routes/index");
 app.use("/", index);
 
+const courses = require("./routes/courses");
+app.use("/courses",courses);
+
 module.exports = app;
