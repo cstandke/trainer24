@@ -8,11 +8,21 @@ class Login extends Component {
     this.state = {
       // username: "",
       password: "",
-      email: "",
-      type: this.props.type
+      email: ""
     };
     console.log(this.state.email);
   }
+
+  // // GET route => to get the current user
+  // router.get("/users/:id", (req, res, next) => {
+  //   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  //     res.status(400).json({ message: "Specified id is not valid" });
+  //     return;
+  //   }
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
   render() {
     return (
@@ -37,7 +47,7 @@ class Login extends Component {
                     className="form-control"
                     name="username"
                     value={this.state.username}
-                    //or: this.state.email! wie geht das?
+                    //or: this.state.email!
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
@@ -58,7 +68,7 @@ class Login extends Component {
               </form>
               <p>
                 You don't have account yet?
-                <Link to={"/"}>Signup</Link>
+                <Link to={"/signup"}>Signup</Link>
               </p>
             </div>
           </div>
