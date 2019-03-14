@@ -1,4 +1,6 @@
 import React from "react";
+import { Jumbotron, Button, Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardText} from "reactstrap";
+import { Link } from "react-router-dom";
 
 const homePage = () => {
   let cardStyle = {
@@ -21,23 +23,23 @@ const homePage = () => {
 
     return cardArray.map(el => {
       return (
-        <div className="col-md-3">
-          <div className="card mb-4" style={cardStyle}>
+        <Col md="3">
+          <Card mb="4" style={cardStyle}>
             {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
-            <div className="bg-secondary p-5 text-light">{el.cardImage}</div>
-            <div className="card-body">
-              <h5 className="card-title">{el.cardTitle}</h5>
-              <p className="card-text">{el.cardText}</p>
-            </div>
-          </div>
-        </div>
+            <CardImg className="bg-secondary p-5 text-light" src={el.cardImage} alt={el.cardImage}/>
+            <CardBody>
+              <CardTitle tag="h5">{el.cardTitle}</CardTitle>
+              <CardText>{el.cardText}</CardText>
+            </CardBody>
+          </Card>
+        </Col>
       );
     });
   };
 
   return (
     <div>
-      <div className="jumbotron">
+      <Jumbotron>
         <h1 className="display-4">Trainer24</h1>
         <p className="lead">
           This is a simple hero unit, a simple jumbotron-style component for
@@ -48,17 +50,16 @@ const homePage = () => {
           It uses utility classes for typography and spacing to space content
           out within the larger container.
         </p>
-        <a className="btn btn-primary btn-lg" href="#" role="button">
-          Learn more
-        </a>
-      </div>
-      <div className="container-fluid p-2">
+        <Button color="primary" size="lg" tag={Link} to="/login">Learn more</Button>
+      </Jumbotron>
+
+      <Container fluid="true" className="p-2">
         <h2 className="display-5 my-2 mb-4">Check out our classes:</h2>
-        <div className="row">
+        <Row>
           {/* Cards go here */}
           {cards()}
-        </div>
-      </div>
+        </Row>
+      </Container>
     </div>
   );
 };
