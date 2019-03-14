@@ -1,6 +1,7 @@
 import React from "react";
+import { Navbar, Nav, NavItem, NavLink, NavbarBrand, Form, Input, Button } from "reactstrap"
 
-import "bootstrap";
+// import "bootstrap";
 import "@fortawesome/fontawesome-free";
 
 const navBar = () => {
@@ -10,7 +11,7 @@ const navBar = () => {
          <a className="navbar-brand" href="#">Navbar</a>
      </nav> */}
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <Navbar expand="lg" dark color="primary">
         <button
           className="navbar-toggler"
           type="button"
@@ -22,44 +23,40 @@ const navBar = () => {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <a className="navbar-brand" href="#">
-          Trainer24
-        </a>
+        <NavbarBrand href="/">Trainer24</NavbarBrand>
 
         <div className="collapse navbar-collapse" id="navbarContents">
-          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
+          <Nav navbar className="mr-auto mt-2 mt-lg-0">
+            <NavItem active>
+              <NavLink href="/">
                 Home <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="login">
-                Login
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="signup">
-                Signup
-              </a>
-            </li>
-          </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="login">Login</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="signup">Signup</NavLink>
+            </NavItem>
+          </Nav>
+          <Form inline className="my-2 my-lg-0">
+            <Input control className="mr-sm-2"
+              // className="form-control mr-sm-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
             />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
+            <Button
+              outline 
+              color="success"
+              className="my-2 my-sm-0"
               type="submit"
             >
               Search
-            </button>
-          </form>
+            </Button>
+          </Form>
         </div>
-      </nav>
+      </Navbar>
     </div>
   );
 };
