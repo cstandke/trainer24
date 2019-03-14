@@ -39,7 +39,7 @@ class Signup extends Component {
           lastname: "",
           email: ""
         });
-        // this.props.getUser(response);
+        this.props.getUser(response);
       });
 
     // this.service
@@ -85,7 +85,7 @@ class Signup extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Last name:</label>
                   <input
                     type="text"
@@ -95,7 +95,7 @@ class Signup extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Username:</label>
                   <input
                     type="text"
@@ -105,7 +105,7 @@ class Signup extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Email:</label>
                   <input
                     type="text"
@@ -115,7 +115,7 @@ class Signup extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Password:</label>
                   <input
                     type="text"
@@ -125,7 +125,10 @@ class Signup extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                <button
+                  className="btn btn-lg btn-primary btn-block"
+                  type="submit"
+                >
                   Register
                 </button>
               </form>

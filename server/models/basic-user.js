@@ -9,8 +9,6 @@ const userSchema = new Schema({
   password: String,
   userId: String,
   type: String
-  //role: { type: String, enum: ["Trainer", "Trainee"] }
-  //oder: user.create type trainer oder artist in auth files
 });
 
 const User = mongoose.model("User", userSchema);

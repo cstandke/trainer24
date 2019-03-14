@@ -10,6 +10,11 @@ const logger = require("morgan");
 const path = require("path");
 const cors = require("cors");
 
+const session = require("express-session");
+const passport = require("passport");
+
+require("./configs/passport");
+
 mongoose
   .connect("mongodb://localhost/server", { useNewUrlParser: true })
   .then(x => {
@@ -49,6 +54,19 @@ app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
+// ADD SESSION SETTINGS HERE:
+app.use(
+  session({
+    secret: "some secret goes here",
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// USE passport.initialize() and passport.session() HERE:
+app.use(passport.initialize());
+app.use(passport.session());
+
 // default value for title local
 app.locals.title = "Express - Generated with IronGenerator";
 
@@ -60,7 +78,8 @@ app.use(
 );
 
 // ROUTES MIDDLEWARE STARTS HERE:
-app.use("/api", require("./routes/auth"));
+const authRoutes = require("./routes/auth-routes");
+app.use("/api", authRoutes);
 
 const index = require("./routes/index");
 app.use("/", index);
