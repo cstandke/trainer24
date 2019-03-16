@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import AuthService from "./AuthService";
 
 class Signup extends Component {
   constructor(props) {
@@ -11,26 +11,16 @@ class Signup extends Component {
       username: "",
       password: "",
       email: ""
-      // type: this.props.type
     };
-    console.log(this.state.email);
+    this.service = new AuthService();
   }
 
   handleFormSubmit = event => {
     event.preventDefault();
 
     const { username, password, firstname, lastname, email } = this.state;
-    //if type = this.props.isTrainer > signup-trainer, else > signup-learner
-
-    axios
-      .post("http://localhost:5000/api/signup-trainer", {
-        // type: this.props.isTrainer;
-        username,
-        password,
-        firstname,
-        lastname,
-        email
-      })
+    this.service
+      .signup(username, password, firstname, lastname, email)
       .then(response => {
         this.setState({
           username: "",
@@ -40,18 +30,8 @@ class Signup extends Component {
           email: ""
         });
         this.props.getUser(response);
-      });
-
-    // this.service
-    //   .signup(username, password)
-    //   .then(response => {
-    //     this.setState({
-    //       username: "",
-    //       password: ""
-    //     });
-    // this.props.getUser(response)
-    // })
-    // .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
   };
 
   handleChange = event => {
