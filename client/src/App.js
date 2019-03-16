@@ -6,6 +6,7 @@ import Navbar from "../src/components/Navbar";
 import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
+import Dashboard from "./components/protected/Dashboard";
 
 class App extends Component {
   constructor(props) {
@@ -31,13 +32,10 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route
-            exact
-            path="/signup"
-            render={() => <Signup getUser={this.getTheUser} />}
-          />
+          <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser} />}/>
           {/* <Route exact path="/signup" component={Signup} /> */}
           <Route exact path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard}/>
         </Switch>
       </div>
     );

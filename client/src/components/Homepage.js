@@ -1,12 +1,14 @@
 import React from "react";
-import { Jumbotron, Button, Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardText} from "reactstrap";
+import {
+  Jumbotron,
+  Button,
+  Container,
+  Row
+} from "reactstrap";
 import { Link } from "react-router-dom";
+import CourseCard from "./CourseCard";
 
 const homePage = () => {
-  let cardStyle = {
-    // width: "18rem"
-  };
-
   let card = {
     cardTitle: "Card title",
     cardText:
@@ -14,27 +16,14 @@ const homePage = () => {
     cardImage: "Card Image"
   };
 
-  let cardArray = [];
-
-  const cards = () => {
-    cardArray.push(card);
-    cardArray.push(card);
-    cardArray.push(card);
-
-    return cardArray.map(el => {
-      return (
-        <Col md="3">
-          <Card mb="4" style={cardStyle}>
-            {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
-            <CardImg className="bg-secondary p-5 text-light" src={el.cardImage} alt={el.cardImage}/>
-            <CardBody>
-              <CardTitle tag="h5">{el.cardTitle}</CardTitle>
-              <CardText>{el.cardText}</CardText>
-            </CardBody>
-          </Card>
-        </Col>
-      );
-    });
+  let cardSpace = () => {
+    return (
+      <Row>
+        <CourseCard card={card} />
+        <CourseCard card={card} />
+        <CourseCard card={card} />
+      </Row>
+    );
   };
 
   return (
@@ -50,15 +39,14 @@ const homePage = () => {
           It uses utility classes for typography and spacing to space content
           out within the larger container.
         </p>
-        <Button color="primary" size="lg" tag={Link} to="/login">Learn more</Button>
+        <Button color="primary" size="lg" tag={Link} to="/login">
+          Learn more
+        </Button>
       </Jumbotron>
 
-      <Container fluid="true" className="p-2">
+      <Container fluid={true} className="p-2">
         <h2 className="display-5 my-2 mb-4">Check out our classes:</h2>
-        <Row>
-          {/* Cards go here */}
-          {cards()}
-        </Row>
+        {cardSpace()}
       </Container>
     </div>
   );
