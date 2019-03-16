@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Homepage from "../src/components/Homepage";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
+import Dashboard from "./components/protected/Dashboard";
 
 class App extends Component {
   constructor(props) {
@@ -27,17 +28,9 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route
-            exact
-            path="/signup"
-            // by using render we allow passing props down to Signup component.
-            render={() => <Signup getUser={this.getTheUser} />}
-          />
-          <Route
-            exact
-            path="/login"
-            render={() => <Login getUser={this.getTheUser} />}
-          />
+          <Route exact path="/login" render={() => <Login getUser={this.getTheUser} />}          />
+          <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser} />}/>
+          <Route exact path="/dashboard" component={Dashboard}/>
         </Switch>
       </div>
     );
