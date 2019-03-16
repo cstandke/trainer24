@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "./AuthService";
+import { Alert } from "reactstrap";
 
 class Signup extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class Signup extends Component {
       firstname: "",
       username: "",
       password: "",
-      email: ""
+      email: "",
+      errorMessage: ""
     };
     this.service = new AuthService();
   }
@@ -31,7 +33,11 @@ class Signup extends Component {
         });
         this.props.getUser(response);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error.response);
+        this.setState({ errorMessage: error.response.data.message });
+        console.log(error);
+      });
   };
 
   handleChange = event => {
@@ -98,7 +104,7 @@ class Signup extends Component {
                 <div className="form-group">
                   <label>Password:</label>
                   <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     name="password"
                     value={this.state.password}
@@ -112,6 +118,10 @@ class Signup extends Component {
                   Register
                 </button>
               </form>
+              <hr />
+              {this.state.errorMessage && (
+                <Alert color="warning">{this.state.errorMessage}</Alert>
+              )}
               <p>
                 Already have account?
                 <Link to={"/login"}>Login</Link>

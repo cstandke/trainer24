@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import AuthService from "./AuthService.js";
+import { Alert } from "reactstrap";
 
 class Login extends Component {
   constructor(props) {
@@ -8,8 +9,9 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      //email: ""
-      redirect: false
+      email: "",
+      redirect: false,
+      errorMessage: ""
     };
     this.service = new AuthService();
   }
@@ -21,7 +23,7 @@ class Login extends Component {
   };
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return <Redirect to="/dashboard" />;
     }
   };
 
@@ -36,7 +38,11 @@ class Login extends Component {
         this.props.getUser(response);
         this.setRedirect();
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error.response);
+        this.setState({ errorMessage: error.response.data.message });
+        console.log(error);
+      });
   };
 
   handleChange = event => {
@@ -76,7 +82,7 @@ class Login extends Component {
                 <div class="form-group">
                   <label>Password:</label>
                   <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     name="password"
                     value={this.state.password}
@@ -87,6 +93,10 @@ class Login extends Component {
                   Login
                 </button>
               </form>
+              <hr />
+              {this.state.errorMessage && (
+                <Alert color="warning">{this.state.errorMessage}</Alert>
+              )}
               <p>
                 You don't have account yet?
                 <Link to={"/signup"}>Signup</Link>
