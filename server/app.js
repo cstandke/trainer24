@@ -9,8 +9,9 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 const cors = require("cors");
-
 const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+
 const passport = require("passport");
 
 require("./configs/passport");
@@ -38,6 +39,15 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  })
+);
 
 // Express View engine setup
 
@@ -85,6 +95,6 @@ const index = require("./routes/index");
 app.use("/", index);
 
 const courses = require("./routes/courses");
-app.use("/courses",courses);
+app.use("/courses", courses);
 
 module.exports = app;

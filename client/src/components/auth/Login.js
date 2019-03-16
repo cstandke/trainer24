@@ -1,24 +1,44 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-// import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
+import AuthService from "./AuthService.js";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // username: "",
+      username: "",
       password: "",
-      email: ""
+      //email: ""
+      redirect: false
     };
-    console.log(this.state.email);
+    this.service = new AuthService();
   }
 
-  // // GET route => to get the current user
-  // router.get("/users/:id", (req, res, next) => {
-  //   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-  //     res.status(400).json({ message: "Specified id is not valid" });
-  //     return;
-  //   }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+
+    const { username, password } = this.state;
+    this.service
+      .login(username, password)
+      .then(response => {
+        this.setState({ username: "", password: "" });
+        this.props.getUser(response);
+        this.setRedirect();
+      })
+      .catch(error => console.log(error));
+  };
+
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -27,6 +47,7 @@ class Login extends Component {
   render() {
     return (
       <div>
+        {this.renderRedirect()}
         <div className="container text-center">
           <div className="row">
             <div className="col-md-4 offset-md-4">

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import Homepage from "../src/components/Homepage";
-import Navbar from "../src/components/Navbar";
-// import logo from "./logo.svg";
+import NavBar from "./components/NavBar";
 import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
@@ -19,25 +17,27 @@ class App extends Component {
     });
   };
 
-  getTheUser = userObj => {
-    this.setState({
-      loggedInUser: userObj
-    });
-  };
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <NavBar
+          userInSession={this.state.loggedInUser}
+          getUser={this.getTheUser}
+        />
 
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route
             exact
             path="/signup"
+            // by using render we allow passing props down to Signup component.
             render={() => <Signup getUser={this.getTheUser} />}
           />
-          {/* <Route exact path="/signup" component={Signup} /> */}
-          <Route exact path="/login" component={Login} />
+          <Route
+            exact
+            path="/login"
+            render={() => <Login getUser={this.getTheUser} />}
+          />
         </Switch>
       </div>
     );
