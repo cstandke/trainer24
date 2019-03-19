@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/protected/Dashboard";
+import ProfilePage from "./components/ProfilePage"
 import AuthService from "./components/auth/AuthService";
 
 class App extends Component {
@@ -59,6 +60,8 @@ class App extends Component {
             render={() => <Signup getUser={this.getTheUser} />}
           />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/profile" component={ProfilePage} />
+
         </Switch>
       </div>
     );

@@ -16,7 +16,7 @@ const courseCard = props => {
   // console.log(props);
   return (
     <Col md="3">
-      <Card mb="4" style={cardStyle}>
+      <Card mb="4" style={cardStyle} className="shadow">
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
         <CardImg
           className="bg-secondary p-5 text-light"
