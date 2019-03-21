@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import {Container,Row} from "reactstrap";
-import CourseCard from "../CourseCard";
-// import { Link } from "react-router-dom";
+import { Container, Row, Button } from "reactstrap";
+import CourseCard from "./courses/CourseCard";
+import { Link } from "react-router-dom";
 // import axios from "axios";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
 
     this.card = {
       cardTitle: "Card title",
@@ -26,23 +25,27 @@ class Dashboard extends Component {
         <CourseCard card={this.card} />
       </Row>
     );
-  };
+  }
 
   render() {
     return (
-      <div> 
+      <div>
         {/* <Nav id="#sidebar">Sidebar</Nav> */}
         <Container id="heading" className="text-center mt-4">
-        <h1>My Dashboard</h1>
+          <h1>My Dashboard</h1>
         </Container>
         <Container id="content" className="mt-3">
-        <h2> My Courses</h2>
-        {this.cardSpace()}
-        <hr className="mt-5 mb-5"/>
-        <h2> Courses history</h2>
-        {this.cardSpace()}
+          <h2> My Courses</h2>
+          {this.cardSpace()}
+
+          <Button tag={Link} to="/createoffer" className="mt-3">
+            Add course
+          </Button>
+          <hr className="mt-5 mb-5" />
+
+          <h2> Courses history</h2>
+          {this.cardSpace()}
         </Container>
-        
       </div>
     );
   }
