@@ -59,7 +59,7 @@ class TheNavbar extends Component {
           <a className="navbar-brand" href="#">Navbar</a>
       </nav> */}
 
-        <Navbar expand="lg" dark color="primary">
+        <Navbar expand="lg" dark color="primary" sticky="top">
           <NavbarToggler
             onClick={this.toggle}
             aria-controls="navbarContents"
@@ -85,6 +85,9 @@ class TheNavbar extends Component {
               </NavItem>
               <NavItem>
                 <NavLink href="dashboard">Dashboard</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="profile">My Profile</NavLink>
               </NavItem>
             </Nav>
             <Form inline className="my-2 my-lg-0">

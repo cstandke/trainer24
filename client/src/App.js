@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/protected/Dashboard";
+import ProfilePage from "./components/ProfilePage";
 import AuthService from "./components/auth/AuthService";
 import CreateOffer from "./components/protected/courses/CreateOffer";
 
@@ -68,6 +69,7 @@ class App extends Component {
           />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/createoffer" component={CreateOffer} />
+          <Route exact path="/profile" component={ProfilePage} />
         </Switch>
       </div>
     );
