@@ -94,7 +94,10 @@ app.use("/api", authRoutes);
 const index = require("./routes/index");
 app.use("/", index);
 
-const courses = require("./routes/courses");
-app.use("/courses", courses);
+const courses = require("./routes/courses-routes");
+app.use("api/courses", courses);
+
+const offers = require("./routes/offers-routes");
+app.use("/api/offers", offers);
 
 module.exports = app;

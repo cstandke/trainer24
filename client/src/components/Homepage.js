@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Jumbotron,
-  Button,
-  Container,
-  Row
-} from "reactstrap";
+import { Jumbotron, Button, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
-import CourseCard from "./CourseCard";
+import CourseCard from "./protected/courses/CourseCard";
 
 const homePage = () => {
   let card = {

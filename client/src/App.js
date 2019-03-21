@@ -5,8 +5,9 @@ import { Switch, Route } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/protected/Dashboard";
-import ProfilePage from "./components/ProfilePage"
+import ProfilePage from "./components/ProfilePage";
 import AuthService from "./components/auth/AuthService";
+import CreateOffer from "./components/protected/courses/CreateOffer";
 
 class App extends Component {
   constructor(props) {
@@ -48,6 +49,13 @@ class App extends Component {
           getUser={this.getTheUser}
         />
         <Switch>
+          {/* <Route exact path="/" render={() => (
+          loggedIn ? (
+             <Redirect to="/dashboard"/>
+              ) : (
+               <Homepage/>
+              )
+            )}/> */}
           <Route exact path="/" component={Homepage} />
           <Route
             exact
@@ -60,8 +68,8 @@ class App extends Component {
             render={() => <Signup getUser={this.getTheUser} />}
           />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/createoffer" component={CreateOffer} />
           <Route exact path="/profile" component={ProfilePage} />
-
         </Switch>
       </div>
     );
@@ -93,7 +101,7 @@ class App extends Component {
     //       <Switch>
     //         <Route exact path="/" component={Homepage} />
     //         {/* adapt this*/}
-    //         {/* <Route exact path="/dashboard/:id" component={Dashboard}/> */}
+    //         {/* <Route exact path="/dashboard/:username" component={Dashboard}/> */}
     //         <Route
     //           exact
     //           path="/signup"
