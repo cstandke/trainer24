@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import {
   Container,
   Row,
-  Col,
   Card,
   CardImg,
   CardBody,
   CardText /*  */
 } from "reactstrap";
-import CourseCard from "./CourseCard";
+import CourseCard from "./protected/courses/CourseCard";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 
@@ -78,8 +77,8 @@ class ProfilePage extends Component {
         </Container> */}
 
         <Container>
-          <Row className="mt-3"  >
-            <Card mb="4" className="shadow d-flex flex-md-row"> 
+          <Row className="mt-3">
+            <Card mb="4" className="shadow d-flex flex-md-row">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <CardImg
                 className="bg-secondary text-light"
