@@ -88,16 +88,17 @@ app.use(
 );
 
 // ROUTES MIDDLEWARE STARTS HERE:
-const authRoutes = require("./routes/auth-routes");
-app.use("/api", authRoutes);
 
 const index = require("./routes/index");
 app.use("/", index);
 
 const courses = require("./routes/courses-routes");
-app.use("api/courses", courses);
+app.use("/api/courses", courses);
 
 const offers = require("./routes/offers-routes");
 app.use("/api/offers", offers);
+
+const authRoutes = require("./routes/auth-routes");
+app.use("/api", authRoutes);
 
 module.exports = app;
