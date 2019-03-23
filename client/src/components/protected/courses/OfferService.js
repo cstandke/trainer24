@@ -1,34 +1,35 @@
-// import axios from "axios";
+import axios from "axios";
 
-// class OfferService {
-//   constructor() {
-//     let service = axios.create({
-//       baseURL: "http://localhost:5000/api/offers",
-//       withCredentials: true
-//     });
-//     this.service = service;
-//   }
+class OfferService {
+  constructor() {
+    let service = axios.create({
+      baseURL: "http://localhost:5000/api/offers"
+    });
+    this.service = service;
+  }
 
-//  createoffer = ()
-// //   signup = (username, password, email, firstname, lastname) => {
-// //     return this.service
-// //       .post("/signup", { username, password, email, firstname, lastname })
-// //       .then(response => response.data);
-// //   };
+  createoffer = (offername, offerdescription, offertype, loggedInUser) => {
+    return this.service
+      .post("/create", {
+        offername,
+        offerdescription,
+        offertype,
+        loggedInUser
+      })
+      .then(response => response.data);
+  };
 
-// //   login = (username, password) => {
-// //     return this.service
-// //       .post("/login", { username, password })
-// //       .then(response => response.data);
-// //   };
+  //   editoffer = (offername, offerdescription, offertype) => {
+  // //     return this.service
+  // //       .post("/edit", {(offername, offerdescription, offertype))
+  // //       .then(response => response.data);
+  // //   };
 
-// //   logout = () => {
-// //     return this.service.post("/logout", {}).then(response => response.data);
-// //   };
+  //   deleteoffer = () => {
+  //       return this.service
+  //       .post("/delete", ??? )
+  //       .then(response => response.data);
+  //   }
+}
 
-// //   loggedin = () => {
-// //     return this.service.get("/loggedin").then(response => response.data);
-// //   };
-// }
-
-// export default OfferService;
+export default OfferService;
