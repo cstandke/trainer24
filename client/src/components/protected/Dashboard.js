@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Button } from "reactstrap";
-import CourseCard from "./courses/CourseCard";
+import CourseCard from "../CourseCard";
 import { Link } from "react-router-dom";
 // import axios from "axios";
 

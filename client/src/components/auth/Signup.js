@@ -32,7 +32,7 @@ class Signup extends Component {
           lastname: "",
           email: ""
         });
-        this.props.getUser(response);
+        this.props.setUser(response);
       })
       .catch(error => {
         console.log(error.response);

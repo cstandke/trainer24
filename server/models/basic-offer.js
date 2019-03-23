@@ -3,18 +3,17 @@ const Schema = mongoose.Schema;
 
 const offerSchema = new Schema({
   offername: {
-    type: String,
-    required: true
+    type: String
   },
   offertype: {
-    type: String,
-    required: true
+    type: String
+  },
+  offerdescription: {
+    type: String
+  },
+  offerowner: {
+    type: mongoose.Schema.Types.ObjectId
   }
-  // offerowner: {
-  //   type: ObjectId
-  // }
-  //the courses from the databObjectIdase that the offer relates to e.g. udemy
-  // courseId: String,
 });
 
 const Offer = mongoose.model("Offer", offerSchema);

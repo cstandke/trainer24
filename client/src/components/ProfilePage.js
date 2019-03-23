@@ -7,7 +7,7 @@ import {
   CardBody,
   CardText /*  */
 } from "reactstrap";
-import CourseCard from "./protected/courses/CourseCard";
+import CourseCard from "./CourseCard";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 

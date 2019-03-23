@@ -16,8 +16,6 @@ class App extends Component {
     this.service = new AuthService();
   }
 
-  //keep this for now
-  // for alternative with first checking if user is logged in
   fetchUser() {
     if (this.state.loggedInUser === null) {
       this.service
@@ -35,7 +33,7 @@ class App extends Component {
     }
   }
 
-  getTheUser = userObj => {
+  setTheUser = userObj => {
     this.setState({
       loggedInUser: userObj
     });
@@ -47,7 +45,7 @@ class App extends Component {
       <div className="App">
         <NavBar
           userInSession={this.state.loggedInUser}
-          getUser={this.getTheUser}
+          setUser={this.setTheUser}
         />
         <Switch>
           {/* <Route exact path="/" render={() => (
@@ -61,16 +59,22 @@ class App extends Component {
           <Route
             exact
             path="/login"
-            render={() => <Login getUser={this.getTheUser} />}
+            render={() => <Login setUser={this.setTheUser} />}
           />
           <Route
             exact
             path="/signup"
-            render={() => <Signup getUser={this.getTheUser} />}
+            render={() => <Signup setUser={this.setTheUser} />}
           />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/createoffer" component={CreateOffer} />
-          <Route exact path="/profile" component={ProfilePage} />
+          <Route exact path="/dashboard" render={() => <Dashboard />} />
+          <Route
+            exact
+            path="/createoffer"
+            render={() => (
+              <CreateOffer userInSession={this.state.loggedInUser} />
+            )}
+          />
+          <Route exact path="/profile" render={() => <ProfilePage />} />
         </Switch>
       </div>
     );
@@ -83,7 +87,7 @@ class App extends Component {
     //     <div className="App">
     //       <NavBar
     //         userInSession={this.state.loggedInUser}
-    //         getUser={this.getTheUser}
+    //         getUser={this.setTheUser}
     //       />
     //       <Switch>
     //         <Route exact path="/" component={Homepage} />
@@ -97,7 +101,7 @@ class App extends Component {
     //     <div className="App">
     //       <NavBar
     //         userInSession={this.state.loggedInUser}
-    //         getUser={this.getTheUser}
+    //         getUser={this.setTheUser}
     //       />
     //       <Switch>
     //         <Route exact path="/" component={Homepage} />
@@ -107,12 +111,12 @@ class App extends Component {
     //           exact
     //           path="/signup"
     //           // by using render we allow passing props down to Signup component.
-    //           render={() => <Signup getUser={this.getTheUser} />}
+    //           render={() => <Signup getUser={this.setTheUser} />}
     //         />
     //         <Route
     //           exact
     //           path="/login"
-    //           render={() => <Login getUser={this.getTheUser} />}
+    //           render={() => <Login getUser={this.setTheUser} />}
     //         />
     //       </Switch>
     //     </div>

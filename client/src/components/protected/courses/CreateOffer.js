@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import OfferService from "./OfferService";
 
 import {
   Col,
@@ -15,25 +15,36 @@ import {
 class CreateCourse extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+
     this.state = {
       offername: "",
       offertype: "",
       offerdescription: ""
-      // offerowner: this.props.loggedInUser.id
     };
+    this.service = new OfferService();
+    console.log(this.props);
+    console.log(this.state);
   }
 
   handleFormSubmit = event => {
     event.preventDefault();
 
-    axios
-      .post("http://localhost:5000/api/offers/createoffer", this.state)
+    const { offername, offertype, offerdescription } = this.state;
+    const loggedInUser = this.props.userInSession;
+    this.service
+      .createoffer(offername, offertype, offerdescription, loggedInUser)
       .then(response => {
-        alert("Offer was added");
-        this.props.history.push("/dashboard");
+        this.setState({
+          offername: "",
+          offertype: "",
+          offerdescription: ""
+        });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error.response);
+        this.setState({ errorMessage: error.response.data.message });
+        console.log(error);
+      });
   };
 
   handleChange = event => {
