@@ -33,7 +33,7 @@ class TheNavbar extends Component {
   logoutUser = () => {
     this.service.logout().then(() => {
       this.setState({ loggedInUser: null });
-      this.props.getUser(null);
+      this.props.setUser(null);
     });
   };
 
@@ -52,7 +52,7 @@ class TheNavbar extends Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div>
         {/*  <nav className="navbar navbar-dark bg-primary">
