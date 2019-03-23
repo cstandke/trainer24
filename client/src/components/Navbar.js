@@ -76,19 +76,26 @@ class TheNavbar extends Component {
                   Home <span className="sr-only">(current)</span>
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="login">Login</NavLink>
-              </NavItem>
-              {this.logoutButton()}
-              <NavItem>
-                <NavLink href="signup">Signup</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="dashboard">Dashboard</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="profile">My Profile</NavLink>
-              </NavItem>
+              {!this.state.loggedInUser ? (
+                <div>
+                  <NavItem>
+                    <NavLink href="login">Login</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="signup">Signup</NavLink>
+                  </NavItem>
+                </div>
+              ) : (
+                <div>
+                  {this.logoutButton()}
+                  <NavItem>
+                    <NavLink href="dashboard">Dashboard</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="profile">My Profile</NavLink>
+                  </NavItem>{" "}
+                </div>
+              )}
             </Nav>
             <Form inline className="my-2 my-lg-0">
               <Input
