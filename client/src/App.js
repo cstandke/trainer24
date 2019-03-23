@@ -18,22 +18,22 @@ class App extends Component {
 
   //keep this for now
   // for alternative with first checking if user is logged in
-  // fetchUser() {
-  //   if (this.state.loggedInUser === null) {
-  //     this.service
-  //       .loggedin()
-  //       .then(response => {
-  //         this.setState({
-  //           loggedInUser: response
-  //         });
-  //       })
-  //       .catch(err => {
-  //         this.setState({
-  //           loggedInUser: false
-  //         });
-  //       });
-  //   }
-  // }
+  fetchUser() {
+    if (this.state.loggedInUser === null) {
+      this.service
+        .loggedin()
+        .then(response => {
+          this.setState({
+            loggedInUser: response
+          });
+        })
+        .catch(err => {
+          this.setState({
+            loggedInUser: false
+          });
+        });
+    }
+  }
 
   getTheUser = userObj => {
     this.setState({
@@ -42,6 +42,7 @@ class App extends Component {
   };
 
   render() {
+    this.fetchUser();
     return (
       <div className="App">
         <NavBar
