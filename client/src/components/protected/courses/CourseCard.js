@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Col,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText
-} from "reactstrap";
+import { Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 // import { Link } from "react-router-dom";
 
 const courseCard = props => {

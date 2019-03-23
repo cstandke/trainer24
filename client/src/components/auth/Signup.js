@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "./AuthService";
 import { Alert } from "reactstrap";
+// import logo
 
 class Signup extends Component {
   constructor(props) {
@@ -52,15 +53,10 @@ class Signup extends Component {
           <div className="row">
             <div className="col-md-4 offset-md-4">
               <h2>Create your account</h2>
+              {/* <img src={logo} alt="logo" /> */}
 
               <form className="form-signin" onSubmit={this.handleFormSubmit}>
-                <img
-                  class="mb-4"
-                  src="https://images-na.ssl-images-amazon.com/images/I/41lCbd6yFlL.jpg"
-                  alt=""
-                  width="72"
-                  height="72"
-                />
+                <img class="mb-4" src="" alt="" width="72" height="72" />
                 <div className="form-group">
                   <label>First name:</label>
                   <input

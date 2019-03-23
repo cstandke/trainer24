@@ -1,8 +1,12 @@
 // Override default variables before the import
 // $body-bg: #000;
 // $primary:red;
+//this is header
+$primary: #69b76b;
+//this is the cards
+$text-warning: #f53978;
+$secondary: #dfefca;
+$text-primary: #313628;
 
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
-
-$primary: #afe0ce;

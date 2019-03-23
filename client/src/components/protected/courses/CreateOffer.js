@@ -15,10 +15,12 @@ import {
 class CreateCourse extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
       offername: "",
       offertype: "",
       offerdescription: ""
+      // offerowner: this.props.loggedInUser.id
     };
   }
 
@@ -75,8 +77,10 @@ class CreateCourse extends Component {
                 id="offerType"
                 value={this.state.offertype}
               >
-                <option>private lessons</option>
-                <option>study group</option>
+                {" "}
+                <option>Please select</option> />
+                <option value="privatelessons">Private lesson</option> />
+                <option value="studygroup">Study group</option>
               </Input>
             </Col>
           </FormGroup>
