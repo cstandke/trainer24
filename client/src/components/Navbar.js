@@ -55,10 +55,6 @@ class TheNavbar extends Component {
     console.log(this.state);
     return (
       <div>
-        {/*  <nav className="navbar navbar-dark bg-primary">
-          <a className="navbar-brand" href="#">Navbar</a>
-      </nav> */}
-
         <Navbar expand="lg" dark color="primary" sticky="top">
           <NavbarToggler
             onClick={this.toggle}
@@ -76,25 +72,24 @@ class TheNavbar extends Component {
                   Home <span className="sr-only">(current)</span>
                 </NavLink>
               </NavItem>
-              {!this.state.loggedInUser ? (
-                <div>
-                  <NavItem>
-                    <NavLink href="login">Login</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="signup">Signup</NavLink>
-                  </NavItem>
-                </div>
-              ) : (
-                <div>
-                  {this.logoutButton()}
-                  <NavItem>
-                    <NavLink href="dashboard">Dashboard</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="profile">My Profile</NavLink>
-                  </NavItem>{" "}
-                </div>
+              {!this.state.loggedInUser && (
+                <NavItem>
+                  <NavLink href="login">Login</NavLink>
+                </NavItem>
+              )}
+              {!this.state.loggedInUser && (
+                <NavItem>
+                  <NavLink href="signup">Signup</NavLink>
+                </NavItem>
+              )}
+              {this.logoutButton()}
+              <NavItem>
+                <NavLink href="dashboard">Dashboard</NavLink>
+              </NavItem>
+              {this.state.loggedInUser && (
+                <NavItem>
+                  <NavLink href="profile">My Profile</NavLink>
+                </NavItem>
               )}
             </Nav>
             <Form inline className="my-2 my-lg-0">
