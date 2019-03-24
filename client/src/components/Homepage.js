@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Jumbotron, Button, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
-import CourseCard from "./protected/courses/CourseCard";
+import CourseCard from "./CourseCard";
 import axios from "axios";
 
 class HomePage extends Component {
