@@ -21,12 +21,12 @@ class HomePage extends Component {
     return service
       .get("/courses")
       .then(courses => {
-        console.log(courses.data.results);
+        // console.log(courses.data);
         // return courses.data.results;
-        const newCardArray = courses.data.results.map(el => {
+        const newCardArray = courses.data.map((el,idx) => {
           // let card = new Card(el.published_title, el.title, el.image_125_H);
           // return <CourseCard card={card} />;
-          return <CourseCard cardTitle={el.published_title} cardText={el.title} cardImage={el.image_125_H}/>
+          return <CourseCard key={idx} cardTitle={el.courseTitle} cardText={el.courseDetails} cardImage={el.courseImage}/>
         });
         this.setState({cardArray:newCardArray});
       })
