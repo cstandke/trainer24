@@ -19,7 +19,8 @@ class CreateCourse extends Component {
     this.state = {
       offername: "",
       offertype: "",
-      offerdescription: ""
+      offerdescription: "",
+      imageUrl: ""
     };
     this.service = new OfferService();
     console.log(this.props);
@@ -29,21 +30,49 @@ class CreateCourse extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    const { offername, offertype, offerdescription } = this.state;
+    const { offername, offertype, offerdescription, imageUrl } = this.state;
     const loggedInUser = this.props.userInSession;
     this.service
-      .createoffer(offername, offertype, offerdescription, loggedInUser)
+      .createoffer(
+        offername,
+        offertype,
+        offerdescription,
+        imageUrl,
+        loggedInUser
+      )
       .then(response => {
         this.setState({
           offername: "",
           offertype: "",
-          offerdescription: ""
+          offerdescription: "",
+          imageUrl: ""
         });
       })
       .catch(error => {
         console.log(error.response);
         this.setState({ errorMessage: error.response.data.message });
         console.log(error);
+      });
+  };
+
+  handleFileUpload = e => {
+    console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    const uploadData = new FormData();
+    // imageUrl => this name has to be the same as in the model since we pass
+    // req.body to .create() method when creating a new thing in '/api/things/create' POST route
+    uploadData.append("imageUrl", e.target.files[0]);
+
+    this.service
+      .handleUpload(uploadData)
+      .then(response => {
+        // console.log("response is: ", response);
+        // after the console.log we can see that response carries 'secure_url' which we can use to update the state
+        this.setState({ imageUrl: response.secure_url });
+        console.log(this.state);
+      })
+      .catch(err => {
+        console.log("Error while uploading the file: ", err);
       });
   };
 
@@ -118,7 +147,12 @@ class CreateCourse extends Component {
               File
             </Label>
             <Col sm={10}>
-              <Input type="file" name="file" id="exampleFile" />
+              <Input
+                onChange={this.handleFileUpload}
+                type="file"
+                name="file"
+                id="exampleFile"
+              />
               <FormText color="muted">
                 This is some placeholder block-level help text for the above
                 input. It's a bit lighter and easily wraps to a new line.

@@ -8,8 +8,8 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardArray:[]
-    }
+      cardArray: []
+    };
   }
 
   getCourses() {
@@ -23,12 +23,19 @@ class HomePage extends Component {
       .then(courses => {
         // console.log(courses.data);
         // return courses.data.results;
-        const newCardArray = courses.data.map((el,idx) => {
+        const newCardArray = courses.data.map((el, idx) => {
           // let card = new Card(el.published_title, el.title, el.image_125_H);
           // return <CourseCard card={card} />;
-          return <CourseCard key={idx} cardTitle={el.courseTitle} cardText={el.courseDetails} cardImage={el.courseImage}/>
+          return (
+            <CourseCard
+              key={idx}
+              cardTitle={el.courseTitle}
+              cardText={el.courseDetails}
+              cardImage={el.courseImage}
+            />
+          );
         });
-        this.setState({cardArray:newCardArray});
+        this.setState({ cardArray: newCardArray });
       })
       .catch(err => {
         console.log(err);
@@ -37,12 +44,8 @@ class HomePage extends Component {
   }
 
   cardSpace() {
-    console.log(this.state.cardArray)
-    return (
-      <Row>
-        {this.state.cardArray}
-      </Row>
-    );
+    console.log(this.state.cardArray);
+    return <Row>{this.state.cardArray}</Row>;
   }
 
   componentDidMount() {
