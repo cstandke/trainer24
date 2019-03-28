@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Jumbotron, Button, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
-import CourseCard from "./protected/courses/CourseCard";
+import CourseCard from "./CourseCard";
 import axios from "axios";
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardArray:[]
-    }
+      cardArray: []
+    };
   }
 
   getCourses() {
@@ -26,9 +26,15 @@ class HomePage extends Component {
         const newCardArray = courses.data.results.map(el => {
           // let card = new Card(el.published_title, el.title, el.image_125_H);
           // return <CourseCard card={card} />;
-          return <CourseCard cardTitle={el.published_title} cardText={el.title} cardImage={el.image_125_H}/>
+          return (
+            <CourseCard
+              cardTitle={el.published_title}
+              cardText={el.title}
+              cardImage={el.image_125_H}
+            />
+          );
         });
-        this.setState({cardArray:newCardArray});
+        this.setState({ cardArray: newCardArray });
       })
       .catch(err => {
         console.log(err);
@@ -37,12 +43,8 @@ class HomePage extends Component {
   }
 
   cardSpace() {
-    console.log(this.state.cardArray)
-    return (
-      <Row>
-        {this.state.cardArray}
-      </Row>
-    );
+    console.log(this.state.cardArray);
+    return <Row>{this.state.cardArray}</Row>;
   }
 
   componentDidMount() {

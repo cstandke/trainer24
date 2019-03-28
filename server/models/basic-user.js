@@ -25,6 +25,8 @@ const userSchema = new Schema({
   },
   userId: String,
   type: String
+
+  // image: { type: String, default: "/images/default_profile.jpg" }
 });
 
 const User = mongoose.model("User", userSchema);

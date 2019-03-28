@@ -13,7 +13,8 @@ const offerSchema = new Schema({
   },
   offerowner: {
     type: mongoose.Schema.Types.ObjectId
-  }
+  },
+  imageUrl: { type: String, default: "/images/defaultcourse.jpg" }
 });
 
 const Offer = mongoose.model("Offer", offerSchema);

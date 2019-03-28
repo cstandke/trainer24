@@ -3,25 +3,46 @@ import axios from "axios";
 class OfferService {
   constructor() {
     let service = axios.create({
-      baseURL: "http://localhost:5000/api/offers"
+      baseURL: "http://localhost:5000/api/offers",
+      withCredentials: true
     });
     this.service = service;
   }
 
-  createoffer = (offername, offerdescription, offertype, loggedInUser) => {
+  handleUpload(theFile) {
+    // console.log('file in service: ', theFile)
+    return this.service
+      .post("/imageupload", theFile)
+      .then(res => res.data)
+      .catch(err => {
+        // console.error(err);
+        throw err;
+      });
+  }
+
+  createoffer = (
+    offername,
+    offerdescription,
+    offertype,
+    imageUrl,
+    loggedInUser
+  ) => {
     return this.service
       .post("/create", {
         offername,
         offerdescription,
         offertype,
+        imageUrl,
         loggedInUser
       })
       .then(response => response.data);
   };
 
-  //   editoffer = (offername, offerdescription, offertype) => {
+  //needs to be enabled once there is functionaliy in FE
+
+  //   editoffer = (offername, offerdescription, offertype, imageUrl) => {
   // //     return this.service
-  // //       .post("/edit", {(offername, offerdescription, offertype))
+  // //       .post("/edit", {(offername, offerdescription, offertype, imageUrl))
   // //       .then(response => response.data);
   // //   };
 

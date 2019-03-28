@@ -3,16 +3,21 @@ const offers = express.Router();
 
 const Offer = require("../models/basic-offer");
 
+// include CLOUDINARY:
+const uploader = require("../configs/cloudinary");
+// const IncomingForm = require('formidable').IncomingForm
+
 //creates new offer
 offers.post("/create", (req, res, next) => {
   console.log("AT create offer", req.body);
-  const { offername, offertype } = req.body;
+  const { offername, offertype, imageUrl } = req.body;
   const offerowner = req.body.loggedInUser._id;
 
   const aNewOffer = new Offer({
     offername: offername,
     offertype: offertype,
-    offerowner: offerowner
+    offerowner: offerowner,
+    imageUrl: imageUrl
   });
 
   //use promise syntax here
@@ -78,6 +83,18 @@ offers.post("/delete/:id", (req, res, next) => {
         error: err
       });
     });
+});
+
+offers.post("/imageupload", uploader.single("imageUrl"), (req, res, next) => {
+  // console.log('file is: ', req.file)
+
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  // get secure_url from the file object and save it in the
+  // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+  res.json({ secure_url: req.file.secure_url });
 });
 
 module.exports = offers;
