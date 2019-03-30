@@ -103,50 +103,6 @@ class App extends Component {
         </Switch>
       </div>
     );
-
-    //Keep this for now: if using fetchUser
-
-    // this.fetchUser();
-    // if (this.state.loggedInUser) {
-    //   return (
-    //     <div className="App">
-    //       <NavBar
-    //         userInSession={this.state.loggedInUser}
-    //         getUser={this.setTheUser}
-    //       />
-    //       <Switch>
-    //         <Route exact path="/" component={Homepage} />
-    //         {/* adapt this*/}
-    //         {/* <Route exact path="/dashboard/:id" component={Dashboard}/> */}
-    //       </Switch>
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div className="App">
-    //       <NavBar
-    //         userInSession={this.state.loggedInUser}
-    //         getUser={this.setTheUser}
-    //       />
-    //       <Switch>
-    //         <Route exact path="/" component={Homepage} />
-    //         {/* adapt this*/}
-    //         {/* <Route exact path="/dashboard/:username" component={Dashboard}/> */}
-    //         <Route
-    //           exact
-    //           path="/signup"
-    //           // by using render we allow passing props down to Signup component.
-    //           render={() => <Signup getUser={this.setTheUser} />}
-    //         />
-    //         <Route
-    //           exact
-    //           path="/login"
-    //           render={() => <Login getUser={this.setTheUser} />}
-    //         />
-    //       </Switch>
-    //     </div>
-    //   );
-    // }
   }
 }
 
