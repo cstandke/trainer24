@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import AuthService from "./AuthService";
 import { Alert } from "reactstrap";
 // import logo
@@ -13,10 +13,23 @@ class Signup extends Component {
       username: "",
       password: "",
       email: "",
-      errorMessage: ""
+      errorMessage: "",
+      redirect: false
     };
     this.service = new AuthService();
   }
+
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/dashboard" />;
+    }
+  };
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -33,6 +46,7 @@ class Signup extends Component {
           email: ""
         });
         this.props.setUser(response);
+        this.setRedirect();
       })
       .catch(error => {
         console.log(error.response);
@@ -49,6 +63,7 @@ class Signup extends Component {
   render() {
     return (
       <div>
+      {this.renderRedirect()}
         <div className="container text-center">
           <div className="row">
             <div className="col-md-4 offset-md-4">

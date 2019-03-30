@@ -22,21 +22,33 @@ class OfferService {
 
   createoffer = (
     offername,
-    offerdescription,
     offertype,
+    offerdescription,
     imageUrl,
     loggedInUser
   ) => {
     return this.service
       .post("/create", {
         offername,
-        offerdescription,
         offertype,
+        offerdescription,
         imageUrl,
         loggedInUser
       })
       .then(response => response.data);
   };
+
+  getOfferDetail(offerID) {
+    return this.service.get(`/${offerID}`
+    // ,{ //this would be for /detail?id=xxx Syntax
+    //   // params:{
+    //   //   id: offerID
+    //   // }
+    // }
+    ).then(response => response.data)
+    .catch(err => console.log(err))
+  }
+
 
   //needs to be enabled once there is functionaliy in FE
 

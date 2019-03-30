@@ -8,6 +8,8 @@ import Dashboard from "./components/protected/Dashboard";
 import ProfilePage from "./components/ProfilePage";
 import AuthService from "./components/auth/AuthService";
 import CreateOffer from "./components/protected/courses/CreateOffer";
+import OfferDetail from "./components/OfferDetail";
+
 
 class App extends Component {
   constructor(props) {
@@ -55,7 +57,7 @@ class App extends Component {
                <Homepage/>
               )
             )}/> */}
-          <Route exact path="/" component={Homepage} />
+          {/* <Route exact path="/" component={Homepage} /> */}
           <Route
             exact
             path="/login"
@@ -75,6 +77,8 @@ class App extends Component {
             )}
           />
           <Route exact path="/profile" render={() => <ProfilePage />} />
+          <Route exact path="/OfferDetail/:id" component={OfferDetail} />
+          <Route exact path="/" component={Homepage} />
         </Switch>
       </div>
     );

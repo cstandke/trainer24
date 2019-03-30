@@ -20,7 +20,7 @@ class CreateCourse extends Component {
       offername: "",
       offertype: "",
       offerdescription: "",
-      imageUrl: ""
+      imageUrl: undefined
     };
     this.service = new OfferService();
     console.log(this.props);
@@ -45,7 +45,7 @@ class CreateCourse extends Component {
           offername: "",
           offertype: "",
           offerdescription: "",
-          imageUrl: ""
+          imageUrl: undefined
         });
       })
       .catch(error => {
@@ -119,8 +119,8 @@ class CreateCourse extends Component {
               >
                 {" "}
                 <option>Please select</option> />
-                <option value="privatelessons">Private lesson</option> />
-                <option value="studygroup">Study group</option>
+                <option value="Private Lesson">Private lesson</option> />
+                <option value="Study Group">Study group</option>
               </Input>
             </Col>
           </FormGroup>

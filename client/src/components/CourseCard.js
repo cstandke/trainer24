@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 import { Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 // import { Link } from "react-router-dom";
 
@@ -9,7 +10,8 @@ const courseCard = props => {
   console.log(props);
   return (
     <Col md="3">
-      <Card mb="4" style={cardStyle} className="shadow">
+      <Link to={props.cardLink}>
+      <Card style={cardStyle} className="shadow my-2">
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
         <CardImg
           className="bg-secondary p-5 text-light"
@@ -21,6 +23,7 @@ const courseCard = props => {
           <CardText>{props.cardText}</CardText>
         </CardBody>
       </Card>
+      </Link>
     </Col>
   );
 };
