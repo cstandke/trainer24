@@ -34,7 +34,7 @@ export default function contentEditable(WrappedContent) {
         () => {
           // this.props.onSave &&
           if (this.isValueChanged()) {
-            this.props.newValue(this.domElm.textContent, this.props.name);
+            this.props.onNewValue(this.domElm.textContent, this.props.name);
             console.log("Value is changed", this.domElm.textContent);
           }
         }

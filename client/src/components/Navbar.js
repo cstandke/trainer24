@@ -52,7 +52,6 @@ class TheNavbar extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Navbar expand="lg" dark color="primary" sticky="top">
@@ -74,21 +73,21 @@ class TheNavbar extends Component {
               </NavItem>
               {!this.state.loggedInUser && (
                 <NavItem>
-                  <NavLink href="login">Login</NavLink>
+                  <NavLink href="/login">Login</NavLink>
                 </NavItem>
               )}
               {!this.state.loggedInUser && (
                 <NavItem>
-                  <NavLink href="signup">Signup</NavLink>
+                  <NavLink href="/signup">Signup</NavLink>
                 </NavItem>
               )}
               {this.logoutButton()}
               <NavItem>
-                <NavLink href="dashboard">Dashboard</NavLink>
+                <NavLink href="/dashboard">Dashboard</NavLink>
               </NavItem>
               {this.state.loggedInUser && (
                 <NavItem>
-                  <NavLink href="profile">My Profile</NavLink>
+                  <NavLink href="/profile">My Profile</NavLink>
                 </NavItem>
               )}
             </Nav>
