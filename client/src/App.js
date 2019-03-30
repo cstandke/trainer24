@@ -8,8 +8,12 @@ import Dashboard from "./components/protected/Dashboard";
 import ProfilePage from "./components/ProfilePage";
 import AuthService from "./components/auth/AuthService";
 import CreateOffer from "./components/protected/courses/CreateOffer";
+<<<<<<< HEAD
 import OfferDetail from "./components/OfferDetail";
 
+=======
+import ProfilePageEdit from "./components/ProfilePageEdit";
+>>>>>>> profile-pic-upload
 
 class App extends Component {
   constructor(props) {
@@ -68,7 +72,11 @@ class App extends Component {
             path="/signup"
             render={() => <Signup setUser={this.setTheUser} />}
           />
-          <Route exact path="/dashboard" render={() => <Dashboard />} />
+          <Route
+            exact
+            path="/dashboard"
+            render={() => <Dashboard userInSession={this.state.loggedInUser} />}
+          />
           <Route
             exact
             path="/createoffer"
@@ -76,9 +84,22 @@ class App extends Component {
               <CreateOffer userInSession={this.state.loggedInUser} />
             )}
           />
-          <Route exact path="/profile" render={() => <ProfilePage />} />
-          <Route exact path="/OfferDetail/:id" component={OfferDetail} />
-          <Route exact path="/" component={Homepage} />
+          <Route
+            exact
+            path="/profile"
+            render={() => (
+              <ProfilePage userInSession={this.state.loggedInUser} />
+            )}
+          />
+          <Route exact path="/OfferDetail/:id" component={OfferDetail} />      
+          <Route
+            exact
+            path="/profile/edit"
+            render={() => (
+              <ProfilePageEdit userInSession={this.state.loggedInUser} />
+            )}
+          />
+           <Route exact path="/" component={Homepage} />
         </Switch>
       </div>
     );

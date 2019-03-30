@@ -98,6 +98,9 @@ app.use("/api/offers", offers);
 const authRoutes = require("./routes/auth-routes");
 app.use("/api", authRoutes);
 
+const profileUpdateRoutes = require("./routes/profile-update-routes");
+app.use("/api/users", profileUpdateRoutes);
+
 const index = require("./routes/index");
 app.use("/", index);
 
