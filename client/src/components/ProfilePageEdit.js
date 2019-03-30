@@ -14,33 +14,57 @@ import {
 } from "reactstrap";
 import contentEditable from "./contentEditable";
 import UpdateProfileService from "./UpdateProfileService";
+import { withRouter } from "react-router";
 // import { Link } from "react-router-dom"; // import axios from "axios";
 
 class ProfilePageEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
+      firstName: this.props.userInSession.firstname,
+      lastName: this.props.userInSession.lastname,
       occupation: "Trainer, Lifelong Learner, Wizzard",
       description: "Share something about you",
       imageUrl: ""
     };
-
     this.service = new UpdateProfileService();
+    console.log("CONSTRUCTOR", this.props.userInSession);
   }
 
   //do not update for all props, only for user in session (componentWillReceiveProps will render on any state change)
+  // componentWillUpdate() {
+  //   console.log("WILL UODATE PROPS", this.props.userInSession);
+  //   if (this.props.userInSession) {
+  //     this.setState({
+  //       firstName: this.props.userInSession.firstname,
+  //       lastName: this.props.userInSession.lastname,
+  //       imageUrl: this.props.userInSession.imageUrl
+  //     });
+  //   }
+  // }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.userInSession !== prevProps.userInSession) {
-      this.setState({
-        firstName: this.props.userInSession.firstname,
-        lastName: this.props.userInSession.lastname,
-        imageUrl: this.props.userInSession.imageUrl
-      });
-    }
-  }
+  //   componentDidUpdate(prevProps) {
+  //     debugger;
+  //     console.log("prevProps", prevProps);
+  //     if (this.props.userInSession !== prevProps.userInSession) {
+  //       debugger;
+  //       this.setState({
+  //         firstName: this.props.userInSession.firstname,
+  //         lastName: this.props.userInSession.lastname,
+  //         imageUrl: this.props.userInSession.imageUrl
+  //       });
+  //     } else {
+  //       return <h1>Loading...</h1>;
+  //     }
+  //   }
+
+  //   componentWillUpdate(nextProps) {
+  //     this.setState({
+  //       firstName: nextProps.userInSession.firstname,
+  //       lastName: nextProps.userInSession.lastname,
+  //       imageUrl: nextProps.userInSession.imageUrl
+  //     });
+  //   }
 
   submitChanges = () => {
     //event.preventDefault();
@@ -54,7 +78,7 @@ class ProfilePageEdit extends Component {
     this.service
       .editProfile(firstName, lastName, occupation, description, imageUrl)
       .then(response => {
-        console.log("INSIDE PROMISE", response);
+        //console.log("INSIDE PROMISE", response);
         //redirect here
         // this.context.router.push("/dashboard");
         this.props.history.push("/dashboard");
@@ -78,7 +102,7 @@ class ProfilePageEdit extends Component {
         // console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
         this.setState({ imageUrl: response.secure_url });
-        console.log("INSIDE FILE UPLOAD", this.state);
+        // console.log("INSIDE FILE UPLOAD", this.state);
       })
       .catch(err => {
         console.log("Error while uploading the file: ", err);
@@ -87,14 +111,13 @@ class ProfilePageEdit extends Component {
 
   // this is storing the text changes to the state
   storeNewValue = (value, name) => {
-    console.log("VALUE FROM DOM", name, ":", value);
+    // console.log("VALUE FROM DOM", name, ":", value);
     this.setState({ [name]: value });
   };
 
   render() {
-    console.log("props at render", this.props);
-    console.log("state at render", this.state);
-    console.log("AT RENDER ", this.state.loggedInUser);
+    // console.log("state at render", this.state);
+    // console.log("AT RENDER ", this.state.loggedInUser);
     let FirstName = contentEditable("h2");
     let LastName = contentEditable("h2");
     let Occupation = contentEditable("h4");
@@ -121,21 +144,21 @@ class ProfilePageEdit extends Component {
                     name="firstName"
                     className="text-primary mt-2"
                     value={this.state.firstName}
-                    newValue={this.storeNewValue}
+                    onNewValue={this.storeNewValue}
                   />
-                  {/* <h2 className="text-primary mt-2">{this.firstName}</h2> */}
+                  {/* <h2 className="text-primary mt-2">{this.props.userInSession.firstName}</h2> */}
                   <LastName
                     name="lastName"
                     className="text-primary mt-2"
                     value={this.state.lastName}
-                    newValue={this.storeNewValue}
+                    onNewValue={this.storeNewValue}
                   />
                   {/* <h2 className="text-primary mt-2">{this.lastName}</h2> */}
                   <Occupation
                     name="occupation"
                     className="text-secondary my-2"
                     value={this.state.occupation}
-                    newValue={this.storeNewValue}
+                    onNewValue={this.storeNewValue}
                   />
                   {/* <h4 className="text-secondary my-2">
                     {this.occupation}
@@ -144,7 +167,7 @@ class ProfilePageEdit extends Component {
                     name="description"
                     className="text-secondary mt-3"
                     value={this.state.description}
-                    newValue={this.storeNewValue}
+                    onNewValue={this.storeNewValue}
                   />
                   {/* <p className="text-secondary mt-3">{this.description}</p> */}
                   <br />
@@ -189,4 +212,4 @@ class ProfilePageEdit extends Component {
     );
   }
 }
-export default ProfilePageEdit;
+export default withRouter(ProfilePageEdit);

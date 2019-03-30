@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Container,
-  Button,
   Row,
   Card,
   CardImg,
@@ -16,14 +15,12 @@ import { Link } from "react-router-dom";
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
-    this.user = {
-      firstName: "Jane",
-      lastName: "Doe",
-      occupation: "Life Coach and Trainer for just about everything",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat."
+    this.state = {
+      firstName: "mii",
+      lastName: "",
+      occupation: "Trainer, Lifelong Learner, Wizzard",
+      description: "Share something about you"
+      // imageUrl: ""
     };
 
     this.card = {
@@ -32,16 +29,20 @@ class ProfilePage extends Component {
         "Some quick example text to build on the card title and make up the bulk of the card's content.",
       cardImage: "Card Image"
     };
-
-    this.profileImageStyle = {
-      backgroundImage:
-        "url(https://mobirise.com/extensions/realtym4/assets/images/face4.jpg)",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      minHeight: "100px" //needs more work
-    };
   }
 
+  componentDidUpdate(prevProps) {
+    console.log("prevProps", prevProps);
+    if (this.props.userInSession !== prevProps.userInSession) {
+      this.setState({
+        firstName: this.props.userInSession.firstname,
+        lastName: this.props.userInSession.lastname
+        // imageUrl: this.props.userInSession.imageUrl
+      });
+    } else {
+      return <h1>Loading...</h1>;
+    }
+  }
   cardSpace() {
     return (
       <Row className="mt-4">
@@ -81,9 +82,9 @@ class ProfilePage extends Component {
         <Container>
           <Row className="mt-3">
             {/* render this button if user is logged in user */}
-            <Button tag={Link} to="/profile/edit" className="mt-3">
+            <Link to="/profile/edit" className="mt-3">
               Edit your profile
-            </Button>
+            </Link>
             <Card mb="4" className="shadow d-flex flex-md-row">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <CardImg
@@ -96,12 +97,14 @@ class ProfilePage extends Component {
                 {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
                 <CardText>
                   <h2 className="text-primary mt-2">
-                    {this.user.firstName} {this.user.lastName}
+                    {this.state.firstName} {this.state.lastName}
                   </h2>
                   <h4 className="text-secondary my-2">
-                    {this.user.occupation}
+                    {this.state.occupation}
                   </h4>
-                  <p className="text-secondary mt-3">{this.user.description}</p>
+                  <p className="text-secondary mt-3">
+                    {this.state.description}
+                  </p>
                 </CardText>
               </CardBody>
             </Card>

@@ -87,15 +87,20 @@ class App extends Component {
               <ProfilePage userInSession={this.state.loggedInUser} />
             )}
           />
-          <Route exact path="/OfferDetail/:id" component={OfferDetail} />      
+          <Route exact path="/OfferDetail/:id" component={OfferDetail} />
           <Route
             exact
             path="/profile/edit"
-            render={() => (
-              <ProfilePageEdit userInSession={this.state.loggedInUser} />
-            )}
+            render={() =>
+              // don't use this to redirect users ->
+              this.state.loggedInUser ? (
+                <ProfilePageEdit userInSession={this.state.loggedInUser} />
+              ) : (
+                <h1>Loading...</h1>
+              )
+            }
           />
-           <Route exact path="/" component={Homepage} />
+          <Route exact path="/" component={Homepage} />
         </Switch>
       </div>
     );
