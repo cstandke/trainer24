@@ -19,7 +19,7 @@ class HomePage extends Component {
     });
 
     return service
-      .get("/courses")
+      .get("/offers")
       .then(courses => {
         // console.log(courses.data);
         // return courses.data.results;
@@ -32,6 +32,7 @@ class HomePage extends Component {
               cardTitle={el.courseTitle}
               cardText={el.courseDetails}
               cardImage={el.courseImage}
+              cardLink={el.courseLink}
             />
           );
         });
