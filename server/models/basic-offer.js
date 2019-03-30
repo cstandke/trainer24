@@ -12,9 +12,13 @@ const offerSchema = new Schema({
     type: String
   },
   offerowner: {
-    type: mongoose.Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
-  imageUrl: { type: String, default: "/images/defaultcourse.jpg" }
+  imageUrl: { type: String, default: "/images/defaultcourse.jpg" },
+  fileUrl: { type: String, default: "/images/defaultcourse.jpg"},
+  udemyId: { type: String, default: "567828"},
+  udemyUrl: {type: String, default: "/complete-python-bootcamp/"}
 });
 
 const Offer = mongoose.model("Offer", offerSchema);

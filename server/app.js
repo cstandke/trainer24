@@ -17,7 +17,7 @@ const passport = require("passport");
 require("./configs/passport");
 
 mongoose
-  .connect("mongodb://localhost/server", { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/server", { useNewUrlParser: true })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -89,8 +89,8 @@ app.use(
 
 // ROUTES MIDDLEWARE STARTS HERE:
 
-const courses = require("./routes/courses-routes");
-app.use("/api/courses", courses);
+// const courses = require("./routes/courses-routes");
+// app.use("/api/courses", courses);
 
 const offers = require("./routes/offers-routes");
 app.use("/api/offers", offers);
