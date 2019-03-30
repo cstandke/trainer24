@@ -8,18 +8,11 @@ const courseCard = props => {
     // width: "18rem"
   };
 
-  // const cardLinkOpen = function(){
-  //   return (props.CardLink) && (<Link to={props.cardLink}>)
-  // }
+  let cardLink = props.cardLink || "/OfferDetail"
+  let linkWrapper;
 
-  // let cardLinkClose = function() {
-  //   if (props.CardLink) return (</Link>)
-  // }
-
-  console.log(props);
-  return (
-    <Col md="3">
-      {/* {cardLinkOpen()} */}
+  let cardContents = function() {
+    return (
       <Card style={cardStyle} className="shadow my-2">
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
         <CardImg
@@ -32,7 +25,23 @@ const courseCard = props => {
           <CardText>{props.cardText}</CardText>
         </CardBody>
       </Card>
-      {/* {cardLinkClose()}; */}
+    )
+  } 
+  // console.log(props);
+  
+  if (props.cardLink) {
+    linkWrapper = (
+      <Link to={cardLink}>
+      {cardContents()}
+    </Link>)
+  } else {
+    linkWrapper = cardContents()
+  }
+    
+  
+  return (
+    <Col md="3">
+      {linkWrapper}
     </Col>
   );
 };
