@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Container,
+  Button,
   Row,
   Card,
   CardImg,
@@ -8,7 +9,8 @@ import {
   CardText /*  */
 } from "reactstrap";
 import CourseCard from "./CourseCard";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 // import axios from "axios";
 
 class ProfilePage extends Component {
@@ -78,6 +80,10 @@ class ProfilePage extends Component {
 
         <Container>
           <Row className="mt-3">
+            {/* render this button if user is logged in user */}
+            <Button tag={Link} to="/profile/edit" className="mt-3">
+              Edit your profile
+            </Button>
             <Card mb="4" className="shadow d-flex flex-md-row">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <CardImg

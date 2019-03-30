@@ -9,7 +9,8 @@ class AuthService {
     this.service = service;
   }
 
-  signup = (username, password, email, firstname, lastname) => {
+  // order of arg need to be same as in BE
+  signup = (username, password, firstname, lastname, email) => {
     return this.service
       .post("/signup", { username, password, email, firstname, lastname })
       .then(response => response.data);
@@ -26,7 +27,10 @@ class AuthService {
   };
 
   loggedin = () => {
-    return this.service.get("/loggedin").then(response => response.data);
+    return this.service
+      .get("/loggedin")
+      .then(response => response.data)
+      .catch(err => console.log("err from logged in", err));
   };
 }
 
