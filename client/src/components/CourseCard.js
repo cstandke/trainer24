@@ -7,10 +7,19 @@ const courseCard = props => {
   let cardStyle = {
     // width: "18rem"
   };
+
+  // const cardLinkOpen = function(){
+  //   return (props.CardLink) && (<Link to={props.cardLink}>)
+  // }
+
+  // let cardLinkClose = function() {
+  //   if (props.CardLink) return (</Link>)
+  // }
+
   console.log(props);
   return (
     <Col md="3">
-      <Link to={props.cardLink}>
+      {/* {cardLinkOpen()} */}
       <Card style={cardStyle} className="shadow my-2">
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
         <CardImg
@@ -23,7 +32,7 @@ const courseCard = props => {
           <CardText>{props.cardText}</CardText>
         </CardBody>
       </Card>
-      </Link>
+      {/* {cardLinkClose()}; */}
     </Col>
   );
 };
