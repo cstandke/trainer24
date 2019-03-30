@@ -8,12 +8,8 @@ import Dashboard from "./components/protected/Dashboard";
 import ProfilePage from "./components/ProfilePage";
 import AuthService from "./components/auth/AuthService";
 import CreateOffer from "./components/protected/courses/CreateOffer";
-<<<<<<< HEAD
 import OfferDetail from "./components/OfferDetail";
-
-=======
 import ProfilePageEdit from "./components/ProfilePageEdit";
->>>>>>> profile-pic-upload
 
 class App extends Component {
   constructor(props) {
