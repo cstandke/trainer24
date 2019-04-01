@@ -2,6 +2,7 @@ const express = require("express");
 const offers = express.Router();
 const axios = require("axios");
 const Offer = require("../models/basic-offer");
+const CourseParticipant = require("../models/course-participant");
 
 // include CLOUDINARY:
 const uploader = require("../configs/cloudinary");
@@ -10,26 +11,35 @@ const uploader = require("../configs/cloudinary");
 let resultArray = [];
 const udemyTestMode = false;
 
-let courseResult = function(title,type,details,imageUrl,link,owner,fileUrl,udemyId,udemyUrl){
+let courseResult = function(
+  title,
+  type,
+  details,
+  imageUrl,
+  link,
+  owner,
+  fileUrl,
+  udemyId,
+  udemyUrl,
+  isJoined
+) {
   this.courseTitle = title;
   this.courseType = type;
   this.courseDetails = details;
   // this.courseLocation = location;
   this.courseImage = imageUrl;
   // this.courselink = link;
-  if (udemyTestMode) this.courseLink= "https://www.udemy.com"+link 
-  else this.courseLink= "/OfferDetail/"+link;
+  if (udemyTestMode) this.courseLink = "https://www.udemy.com" + link;
+  else this.courseLink = "/OfferDetail/" + link;
   if (owner) {
-    this.courseOwner=owner.firstname+" "+owner.lastname
-    this.ownerProfileLink="/profile/"+owner._id
-  }
-  else this.courseOwner="Nobody";
-  this.courseFile=fileUrl;
-  this.udemyId=udemyId;
-  this.udemyUrl=udemyUrl;
-}
-
-
+    this.courseOwner = owner.firstname + " " + owner.lastname;
+    this.ownerProfileLink = "/profile/" + owner._id;
+  } else this.courseOwner = "Nobody";
+  this.courseFile = fileUrl;
+  this.udemyId = udemyId;
+  this.udemyUrl = udemyUrl;
+  this.isJoined = isJoined;
+};
 
 //creates new offer
 offers.post("/create", (req, res, next) => {
@@ -108,7 +118,7 @@ offers.post("/delete/:id", (req, res, next) => {
         error: err
       });
     });
-});;
+});
 
 offers.post("/imageupload", uploader.single("imageUrl"), (req, res, next) => {
   // console.log('file is: ', req.file)
@@ -122,29 +132,105 @@ offers.post("/imageupload", uploader.single("imageUrl"), (req, res, next) => {
   res.json({ secure_url: req.file.secure_url });
 });
 
+//POST to join a course
+offers.post("/join", (req, res, next) => {
+  const aNewParticipant = new CourseParticipant({
+    courseId: req.query.courseId,
+    // participantId:req.query.userId
+    participantId: req.user._id
+  });
+  if (!aNewParticipant.courseId || !aNewParticipant.participantId)
+    return res
+      .status(400)
+      .json({ error: "All requrired fields must be filled!" });
+  CourseParticipant.findOne({
+    courseId: req.query.courseId,
+    participantId: req.user._id
+  })
+  .then(foundRecord => {
+    if (foundRecord) return res.status(200).json({record:foundRecord})
+    aNewParticipant
+    .save()
+    .then(savedRecord => {
+      res.status(200).json({ record: savedRecord });
+    })
+    .catch(err => res.status(400).json({ error: err }));
+  }).catch(err => res.status(400).json({ error: err }));
+  // res.send(aNewMember);
+});
+
+offers.get("/myCourses", (req, res, next) => {
+  // res.render('index');
+  // res.send("Courses response");
+    // let queryParams = {};
+    // if (req.query.ownerId) queryParams = { offerowner: req.query.ownerId };
+    CourseParticipant.find({participantId:req.user._id})
+    // Offer.find(queryParams)
+      .populate("courseId")
+      .then(offers => {
+        resultArray = offers.map(el => {
+          console.log(el);
+          return new courseResult(
+            el.courseId.offername,
+            el.courseId.offertype,
+            el.courseId.offerdescription,
+            el.courseId.imageUrl,
+            el.courseId._id,
+            el.courseId.offerowner,
+            el.courseId.fileUrl,
+            el.courseId.udemyId,
+            el.courseId.udemyUrl
+          );
+        });
+        res.json(resultArray);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+});
+
 //show details for one offer
 offers.get("/:id", (req, res, next) => {
-  Offer.findById({ _id: req.params.id }).populate("offerowner")
-    .then(theOffer => {  
-      res.status(200).json(
-        new courseResult(
-          theOffer.offername,
-          theOffer.offertype,
-          theOffer.offerdescription,
-          theOffer.imageUrl,
-          theOffer._id,
-          theOffer.offerowner,
-          theOffer.fileUrl,
-          theOffer.udemyId,
-          theOffer.udemyUrl
-        ))
+  let isJoined = false;
+  Offer.findById({ _id: req.params.id })
+    .populate("offerowner")
+    .then(theOffer => {
+      CourseParticipant.findOne({
+        courseId: theOffer._id,
+        participantId: req.user._id
+      })
+        .then(joinedCourse => {
+          if (joinedCourse) isJoined = true;
+          res
+            .status(200)
+            .json(
+              new courseResult(
+                theOffer.offername,
+                theOffer.offertype,
+                theOffer.offerdescription,
+                theOffer.imageUrl,
+                theOffer._id,
+                theOffer.offerowner,
+                theOffer.fileUrl,
+                theOffer.udemyId,
+                theOffer.udemyUrl,
+                isJoined
+              )
+            );
+        })
+        .catch(err => {
+          res.status(400).json({
+            error: err
+          });
+        });
     })
     .catch(err => {
       res.status(400).json({
         error: err
       });
     });
-})
+});
+
 
 
 /* GET list of all offers */
@@ -162,16 +248,23 @@ offers.get("/", (req, res, next) => {
       .then(response => {
         // console.log(response.data.results)
         resultArray = response.data.results.map(el => {
-          return new courseResult(el.published_title,el.title,el.image_240x135,el.url)
+          return new courseResult(
+            el.published_title,
+            el.title,
+            el.image_240x135,
+            el.url
+          );
         });
         // console.log(resultArray);
         // res.json(response.data)
         res.json(resultArray);
-        
-        })
+      })
       .catch(error => res.json(error));
   } else {
-    Offer.find().populate('offerowner')
+    let queryParams = {};
+    if (req.query.ownerId) queryParams = { offerowner: req.query.ownerId };
+    Offer.find(queryParams)
+      .populate("offerowner")
       .then(offers => {
         resultArray = offers.map(el => {
           // console.log(el);
@@ -184,7 +277,8 @@ offers.get("/", (req, res, next) => {
             el.offerowner,
             el.fileUrl,
             el.udemyId,
-            el.udemyUrl)
+            el.udemyUrl
+          );
         });
         res.json(resultArray);
       })

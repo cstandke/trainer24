@@ -3,13 +3,7 @@ import { Link } from "react-router-dom";
 import OfferService from "./protected/courses/OfferService";
 
 import {
-  Col,
   Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
   Container,
   Row,
   Card,
@@ -29,6 +23,7 @@ class OfferDetail extends Component {
     this.service = new OfferService();
     // console.log(this.props);
     // console.log(this.state);
+    this.joinCourse = this.joinCourse.bind(this);
   }
 
   getOfferDetails(offerID) {
@@ -41,22 +36,39 @@ class OfferDetail extends Component {
       .catch(err => console.log(err));
   }
 
+  joinCourse() {
+    this.service.joinCourse(this.state.offerId)
+    .then(response => {
+      if (response.status===200) {
+        console.log("joined this course!");
+        this.getOfferDetails(this.state.offerId);
+        // console.log(response.data);
+      }
+      else console.log("not successful!")
+    })
+  }
+
+  joinButton() {
+    if (this.state.theOffer.isJoined) return (
+      <Button primary disabled className="w-50 mt-3">You joined this Course</Button>
+    ) 
+    else return (<Button primary className="w-50 mt-3" onClick={()=>this.joinCourse()}>Join this Course</Button>)
+  }
+
   componentDidMount() {
     const { params } = this.props.match;
+    this.setState({offerId: params.id})
     // console.log("params:",params)
     this.getOfferDetails(params.id);
   }
 
   render() {
-    console.log(this.state)
-
+    // console.log(this.state)
     return (
       <div>
-      
        <Container>
        <Row className="mt-3">
          <Card mb="4" className="shadow w-100">
-           {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
            <CardImg
              className="bg-secondary text-light mx-auto my-1"
              src={this.state.theOffer.courseImage}
@@ -64,9 +76,7 @@ class OfferDetail extends Component {
              style={{height:"25vh", maxWidth:"50vh"}}
            />
            <CardBody   >
-             {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
-             <CardText>
-               
+             <CardText>               
                 <h2 className="text-primary my-4">
                   {this.state.theOffer.courseTitle}
                </h2>
@@ -83,7 +93,7 @@ class OfferDetail extends Component {
                <p>{this.state.theOffer.location}</p>
              </CardText>
              <div className="text-center">
-              <Button primary className="w-25 mt-3">Join this Course</Button>
+              {this.joinButton()}
              </div>
            </CardBody>
          </Card>

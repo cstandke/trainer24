@@ -68,10 +68,22 @@ class App extends Component {
             path="/signup"
             render={() => <Signup setUser={this.setTheUser} />}
           />
-          <Route
+          {/* <Route
             exact
             path="/dashboard"
             render={() => <Dashboard userInSession={this.state.loggedInUser} />}
+          /> */}
+          <Route
+            exact
+            path="/dashboard"
+            render={() =>
+              // don't use this to redirect users ->
+              this.state.loggedInUser ? (
+                <Dashboard userInSession={this.state.loggedInUser} />
+              ) : (
+                <h1>Loading...</h1>
+              )
+            }
           />
           <Route
             exact
@@ -83,9 +95,14 @@ class App extends Component {
           <Route
             exact
             path="/profile"
-            render={() => (
-              <ProfilePage userInSession={this.state.loggedInUser} />
-            )}
+            render={() =>
+              // don't use this to redirect users ->
+              this.state.loggedInUser ? (
+                <ProfilePage userInSession={this.state.loggedInUser} />
+              ) : (
+                <h1>Loading...</h1>
+              )
+            }
           />
           <Route exact path="/OfferDetail/:id" component={OfferDetail} />
           <Route
