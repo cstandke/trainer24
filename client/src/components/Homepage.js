@@ -45,7 +45,7 @@ class HomePage extends Component {
   }
 
   cardSpace() {
-    console.log(this.state.cardArray);
+    // console.log(this.state.cardArray);
     return <Row>{this.state.cardArray}</Row>;
   }
 
