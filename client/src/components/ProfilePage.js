@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
+// import user_man from "./images/user-man.png";
 
 import axios from "axios";
 
@@ -16,11 +17,14 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // firstName: "Jane ",
+      // lastName: "Doe",
+      //this does not make sense if not current user
       firstName: this.props.userInSession.firstname,
       lastName: this.props.userInSession.lastname,
       occupation: "Trainer, Lifelong Learner, Wizzard",
-      description: "Share something about you"
-      // imageUrl: ""
+      description: "Share something about you",
+      imageUrl: ""
     };
 
     this.card = {
@@ -47,8 +51,8 @@ class ProfilePage extends Component {
       this.setState({
         firstName: this.props.userInSession.firstname,
         lastName: this.props.userInSession.lastname,
-        // imageUrl: this.props.userInSession.imageUrl
-      })
+        imageUrl: this.props.userInSession.imageUrl
+      });
     } else {
       return <h1>Loading...</h1>;
     }
@@ -151,12 +155,13 @@ class ProfilePage extends Component {
             <Link to="/profile/edit" className="mt-3">
               Edit your profile
             </Link>
+            <br />
             <Card mb="4" className="shadow d-flex flex-md-row">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <CardImg
                 className="bg-secondary text-light"
-                src="https://mobirise.com/extensions/realtym4/assets/images/face4.jpg"
-                alt="https://mobirise.com/extensions/realtym4/assets/images/face4.jpg"
+                src="client/src/components/images/user_man.png"
+                alt="default user image"
                 // style={{height:"25vh"}}
               />
               <CardBody>

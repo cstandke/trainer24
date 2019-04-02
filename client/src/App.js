@@ -68,11 +68,7 @@ class App extends Component {
             path="/signup"
             render={() => <Signup setUser={this.setTheUser} />}
           />
-          {/* <Route
-            exact
-            path="/dashboard"
-            render={() => <Dashboard userInSession={this.state.loggedInUser} />}
-          /> */}
+
           <Route
             exact
             path="/dashboard"
@@ -81,7 +77,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <Dashboard userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>Loading...</h1>
+                <h3>No access. Please login or create an account.</h3>
               )
             }
           />
@@ -100,7 +96,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <ProfilePage userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>Loading...</h1>
+                <h1>No access. Please login or create an account</h1>
               )
             }
           />
@@ -113,7 +109,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <ProfilePageEdit userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>Loading...</h1>
+                <h1>not for you...</h1>
               )
             }
           />
