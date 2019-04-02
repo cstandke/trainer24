@@ -60,13 +60,13 @@ class Login extends Component {
               <h2>Login</h2>
 
               <form className="form-signin" onSubmit={this.handleFormSubmit}>
-                <img
+                {/* <img
                   class="mb-4"
-                  src="https://images-na.ssl-images-amazon.com/images/I/41lCbd6yFlL.jpg"
+                  src=""
                   alt=""
                   width="72"
                   height="72"
-                />
+                /> */}
                 <div class="form-group">
                   <label>Username or Email:</label>
                   <input
@@ -99,6 +99,7 @@ class Login extends Component {
               )}
               <p>
                 You don't have account yet?
+                <hr />
                 <Link to={"/signup"}>Signup</Link>
               </p>
             </div>

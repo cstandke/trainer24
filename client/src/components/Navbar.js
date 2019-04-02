@@ -12,6 +12,8 @@ import {
   Collapse
 } from "reactstrap";
 
+import Logo from "../images/logo.png";
+
 import AuthService from "./auth/AuthService";
 import "@fortawesome/fontawesome-free";
 
@@ -54,7 +56,7 @@ class TheNavbar extends Component {
   render() {
     return (
       <div>
-        <Navbar expand="lg" dark color="primary" sticky="top">
+        <Navbar expand="lg" light sticky="top">
           <NavbarToggler
             onClick={this.toggle}
             aria-controls="navbarContents"
@@ -63,7 +65,9 @@ class TheNavbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </NavbarToggler>
-          <NavbarBrand href="/">Trainer24</NavbarBrand>
+          <NavbarBrand href="/">
+            <img class="mb-3 mt-2" src={Logo} alt="" width="116" height="50" />
+          </NavbarBrand>
           <Collapse navbar id="navbarContents" isOpen={!this.state.collapsed}>
             <Nav navbar className="mr-auto mt-2 mt-lg-0">
               <NavItem active>
@@ -91,15 +95,15 @@ class TheNavbar extends Component {
                 </NavItem>
               )}
             </Nav>
-            <Form inline className="my-2 my-lg-0">
+            {/* <Form inline className="my-2 my-lg-0">
               <Input
                 className="mr-sm-2"
                 // className="form-control mr-sm-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-              />
-              <Button
+              /> */}
+            {/* <Button
                 outline
                 color="success"
                 className="my-2 my-sm-0"
@@ -107,7 +111,7 @@ class TheNavbar extends Component {
               >
                 Search
               </Button>
-            </Form>
+            </Form> */}
           </Collapse>
         </Navbar>
       </div>

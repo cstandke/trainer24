@@ -71,7 +71,13 @@ class App extends Component {
           <Route
             exact
             path="/dashboard"
-            render={() => <Dashboard userInSession={this.state.loggedInUser} />}
+            render={() =>
+              this.state.loggedInUser ? (
+                <Dashboard userInSession={this.state.loggedInUser} />
+              ) : (
+                <h3> No access. Please log in </h3>
+              )
+            }
           />
           <Route
             exact
@@ -96,7 +102,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <ProfilePageEdit userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>Loading...</h1>
+                <h1>not for you...</h1>
               )
             }
           />

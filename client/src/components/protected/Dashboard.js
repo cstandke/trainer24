@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      firstName: this.props.userInSession.firstname
+    };
 
     this.card = {
       cardTitle: "Card title",
@@ -32,7 +34,7 @@ class Dashboard extends Component {
       <div>
         {/* <Nav id="#sidebar">Sidebar</Nav> */}
         <Container id="heading" className="text-center mt-4">
-          <h1>My Dashboard</h1>
+          <h1>Welcome {this.state.firstName}</h1>
         </Container>
         <Container id="content" className="mt-3">
           <h2> My Courses</h2>
