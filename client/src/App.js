@@ -100,7 +100,7 @@ class App extends Component {
               )
             }
           />
-          <Route exact path="/OfferDetail/:id" component={OfferDetail} />
+          <Route exact path="/OfferDetail/:id" component={OfferDetail} userInSession={this.state.loggedInUser}/>
           <Route
             exact
             path="/profile/edit"
