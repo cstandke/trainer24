@@ -44,7 +44,7 @@ let courseResult = function(
 //creates new offer
 offers.post("/create", (req, res, next) => {
   console.log("AT create offer", req.body);
-  const { offername, offertype, offerdescription, imageUrl } = req.body;
+  const { offername, offertype, offerdescription, imageUrl, fileUrl } = req.body;
   const offerowner = req.body.loggedInUser._id;
 
   const aNewOffer = new Offer({
@@ -52,6 +52,7 @@ offers.post("/create", (req, res, next) => {
     offertype: offertype,
     offerdescription: offerdescription,
     imageUrl: imageUrl,
+    fileUrl: fileUrl,
     offerowner: offerowner
   });
 
@@ -192,12 +193,15 @@ offers.get("/myCourses", (req, res, next) => {
 //show details for one offer
 offers.get("/:id", (req, res, next) => {
   let isJoined = false;
+  let reqUser = null;
+  if (req.user) reqUser=req.user._id;
+  console.log(req.user);
   Offer.findById({ _id: req.params.id })
     .populate("offerowner")
     .then(theOffer => {
       CourseParticipant.findOne({
         courseId: theOffer._id,
-        participantId: req.user._id
+        participantId: reqUser
       })
         .then(joinedCourse => {
           if (joinedCourse) isJoined = true;

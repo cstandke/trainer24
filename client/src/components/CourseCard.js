@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom"
 import { Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import defaultImage from "./images/course.png"
 // import { Link } from "react-router-dom";
 
 const courseCard = props => {
@@ -8,7 +9,8 @@ const courseCard = props => {
     // width: "18rem"
   };
 
-  let cardLink = props.cardLink || "/OfferDetail"
+  let cardLink = props.cardLink || "/OfferDetail";
+  let cardImage = props.cardImage || defaultImage;
   let linkWrapper;
 
   let cardContents = function() {
@@ -17,8 +19,8 @@ const courseCard = props => {
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
         <CardImg
           className="bg-secondary p-5 text-light"
-          src={props.cardImage}
-          alt={props.cardImage}
+          src={cardImage}
+          alt={cardImage}
         />
         <CardBody>
           <CardTitle tag="h5">{props.cardTitle}</CardTitle>

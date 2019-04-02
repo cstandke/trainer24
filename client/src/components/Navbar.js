@@ -12,7 +12,7 @@ import {
   Collapse
 } from "reactstrap";
 
-import Logo from "../images/logo.png";
+import Logo from "./images/logo.png";
 
 import AuthService from "./auth/AuthService";
 import "@fortawesome/fontawesome-free";
