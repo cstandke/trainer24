@@ -96,7 +96,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <ProfilePage userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>No access. Please login or create an account</h1>
+                <h3>No access. Please login or signup.</h3>
               )
             }
           />
@@ -109,7 +109,7 @@ class App extends Component {
               this.state.loggedInUser ? (
                 <ProfilePageEdit userInSession={this.state.loggedInUser} />
               ) : (
-                <h1>not for you...</h1>
+                <h3>No access. Please login or signup.</h3>
               )
             }
           />

@@ -66,7 +66,7 @@ class HomePage extends Component {
             1:1 tutoring and study groups that enhance your learning
             experiences.
           </p>
-          <Button color="primary" size="lg" tag={Link} to="/login">
+          <Button color="primary" size="lg" tag={Link} to="/signup">
             Learn more
           </Button>
         </Jumbotron>
