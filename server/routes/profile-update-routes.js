@@ -42,7 +42,7 @@ profileUpdateRoutes.post(
   "/imageupload",
   uploader.single("imageUrl"),
   (req, res, next) => {
-    // console.log('file is: ', req.file)
+    console.log('file is: ', req.file)
 
     if (!req.file) {
       next(new Error("No file uploaded!"));

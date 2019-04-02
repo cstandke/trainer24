@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import OfferService from "./OfferService";
+import defaultImage from "../../images/course.png"
 
 import {
   Col,
@@ -20,7 +21,9 @@ class CreateCourse extends Component {
       offername: "",
       offertype: "",
       offerdescription: "",
-      imageUrl: undefined
+      location:"",
+      imageUrl: undefined,
+      fileUrl: undefined
     };
     this.service = new OfferService();
     console.log(this.props);
@@ -30,14 +33,16 @@ class CreateCourse extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    const { offername, offertype, offerdescription, imageUrl } = this.state;
+    const { offername, offertype, offerdescription, location, imageUrl, fileUrl } = this.state;
     const loggedInUser = this.props.userInSession;
     this.service
       .createoffer(
         offername,
         offertype,
         offerdescription,
+        location,
         imageUrl,
+        fileUrl,
         loggedInUser
       )
       .then(response => {
@@ -45,8 +50,11 @@ class CreateCourse extends Component {
           offername: "",
           offertype: "",
           offerdescription: "",
-          imageUrl: undefined
+          location:"",
+          imageUrl: undefined,
+          fileUrl: undefined
         });
+        document.getElementById("courseForm").reset();
       })
       .catch(error => {
         console.log(error.response);
@@ -55,8 +63,8 @@ class CreateCourse extends Component {
       });
   };
 
-  handleFileUpload = e => {
-    console.log("The file to be uploaded is: ", e.target.files[0]);
+  handleImageUpload = e => {
+    console.log("The image to be uploaded is: ", e.target.files[0]);
 
     const uploadData = new FormData();
     // imageUrl => this name has to be the same as in the model since we pass
@@ -76,20 +84,63 @@ class CreateCourse extends Component {
       });
   };
 
+
+  handleFileUpload = e => {
+    console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    const uploadData = new FormData();
+    // imageUrl => this name has to be the same as in the model since we pass
+    // req.body to .create() method when creating a new thing in '/api/things/create' POST route
+    uploadData.append("imageUrl", e.target.files[0]);
+
+    this.service
+      .handleUpload(uploadData)
+      .then(response => {
+        // console.log("response is: ", response);
+        // after the console.log we can see that response carries 'secure_url' which we can use to update the state
+        this.setState({ fileUrl: response.secure_url });
+        console.log(this.state);
+      })
+      .catch(err => {
+        console.log("Error while uploading the file: ", err);
+      });
+  };
+
   handleChange = event => {
     let { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
   render() {
+    let imageUrl = this.state.imageUrl || defaultImage
+    let imageStyle = {
+      maxHeight:"25vh"
+    }
     return (
-      <Container className="m-5">
+      <div>
+        <Form id="courseForm" onSubmit={this.handleFormSubmit}>
+        <Container className="my-5 text-center">
         <h2 className="text-center">Create a new offer</h2>
-        <p>
+        <img className="mt-4" src={imageUrl} alt={imageUrl} style={imageStyle}/>
+          </Container>
+        <Container>
+        <FormGroup row >
+            <Label for="imageFile" sm={2}>
+              Upload Image
+            </Label>
+            <Col sm={10}>
+              <Input
+                onChange={this.handleImageUpload}
+                type="file"
+                name="file"
+                id="imageFile"
+              />
+            </Col>
+          </FormGroup>
+          <p>
           your selection > here add component to search courses from udemy that
           you want to create an offer for
         </p>
-        <Form onSubmit={this.handleFormSubmit}>
           <FormGroup row>
             <Label for="offerName" sm={2}>
               Title of your offer
@@ -154,8 +205,7 @@ class CreateCourse extends Component {
                 id="exampleFile"
               />
               <FormText color="muted">
-                This is some placeholder block-level help text for the above
-                input. It's a bit lighter and easily wraps to a new line.
+                Add your course material here...
               </FormText>
             </Col>
           </FormGroup>
@@ -171,15 +221,17 @@ class CreateCourse extends Component {
               </FormGroup>
             </Col>
           </FormGroup> */}
-          <FormGroup check row>
+          <FormGroup check row className="mb-5">
             <Col className="text-center">
               <Button type="submit" outline color="primary">
                 Publish your offer
               </Button>
             </Col>
           </FormGroup>
-        </Form>
+        
       </Container>
+      </Form>
+      </div>
     );
   }
 }

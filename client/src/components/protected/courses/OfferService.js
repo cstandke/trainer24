@@ -24,7 +24,9 @@ class OfferService {
     offername,
     offertype,
     offerdescription,
+    location,
     imageUrl,
+    fileUrl,
     loggedInUser
   ) => {
     return this.service
@@ -32,7 +34,9 @@ class OfferService {
         offername,
         offertype,
         offerdescription,
+        location,
         imageUrl,
+        fileUrl,
         loggedInUser
       })
       .then(response => response.data);
