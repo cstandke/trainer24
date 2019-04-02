@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 // import { Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const courseCard = props => {
     // width: "18rem"
   };
 
-  let cardLink = props.cardLink || "/OfferDetail"
+  let cardLink = props.cardLink || "/OfferDetail";
   let linkWrapper;
 
   let cardContents = function() {
@@ -25,25 +25,17 @@ const courseCard = props => {
           <CardText>{props.cardText}</CardText>
         </CardBody>
       </Card>
-    )
-  } 
+    );
+  };
   // console.log(props);
-  
+
   if (props.cardLink) {
-    linkWrapper = (
-      <Link to={cardLink}>
-      {cardContents()}
-    </Link>)
+    linkWrapper = <Link to={cardLink}>{cardContents()}</Link>;
   } else {
-    linkWrapper = cardContents()
+    linkWrapper = cardContents();
   }
-    
-  
-  return (
-    <Col md="3">
-      {linkWrapper}
-    </Col>
-  );
+
+  return <Col md="3">{linkWrapper}</Col>;
 };
 
 export default courseCard;

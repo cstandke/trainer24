@@ -12,7 +12,7 @@ import {
   Collapse
 } from "reactstrap";
 
-import Logo from "../images/logo.png";
+import Logo from "./images/logo.png";
 
 import AuthService from "./auth/AuthService";
 import "@fortawesome/fontawesome-free";
@@ -86,9 +86,11 @@ class TheNavbar extends Component {
                 </NavItem>
               )}
               {this.logoutButton()}
-              <NavItem>
-                <NavLink href="/dashboard">Dashboard</NavLink>
-              </NavItem>
+              {this.state.loggedInUser && (
+                <NavItem>
+                  <NavLink href="/dashboard">Dashboard</NavLink>
+                </NavItem>
+              )}
               {this.state.loggedInUser && (
                 <NavItem>
                   <NavLink href="/profile">My Profile</NavLink>

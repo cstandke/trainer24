@@ -2,6 +2,17 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import AuthService from "./AuthService.js";
 import { Alert } from "reactstrap";
+import {
+  Container,
+  Row,
+  Card,
+  CardBody,
+  CardText,
+  CardImg,
+  Col
+} from "reactstrap";
+// import Logo from "../images/logo.png";
+import Herosm from "../images/hero_small.png";
 
 class Login extends Component {
   constructor(props) {
@@ -54,57 +65,69 @@ class Login extends Component {
     return (
       <div>
         {this.renderRedirect()}
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-md-4 offset-md-4">
-              <h2>Login</h2>
-
-              <form className="form-signin" onSubmit={this.handleFormSubmit}>
-                {/* <img
-                  class="mb-4"
-                  src=""
-                  alt=""
-                  width="72"
-                  height="72"
-                /> */}
-                <div class="form-group">
-                  <label>Username or Email:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    //or: this.state.email!
-                    onChange={e => this.handleChange(e)}
+        <Container>
+          <Row className="mt-3 text-center">
+            <Col>
+              <Card className="shadow flex-row">
+                <div>
+                  <CardImg
+                    className="bg-secondary text-light d-none d-lg-block"
+                    style={{ width: "500px" }}
+                    src={Herosm}
+                    alt="Image"
                   />
                 </div>
+                <CardBody style={{ minWidth: "400px" }}>
+                  <CardText>
+                    <h2>Login</h2>
 
-                <div class="form-group">
-                  <label>Password:</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={e => this.handleChange(e)}
-                  />
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                  Login
-                </button>
-              </form>
-              <hr />
-              {this.state.errorMessage && (
-                <Alert color="warning">{this.state.errorMessage}</Alert>
-              )}
-              <p>
-                You don't have account yet?
-                <hr />
-                <Link to={"/signup"}>Signup</Link>
-              </p>
-            </div>
-          </div>
-        </div>
+                    <form
+                      className="form-signin"
+                      onSubmit={this.handleFormSubmit}
+                    >
+                      <div class="form-group">
+                        <label>Username or Email:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="username"
+                          value={this.state.username}
+                          //or: this.state.email!
+                          onChange={e => this.handleChange(e)}
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label>Password:</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          name="password"
+                          value={this.state.password}
+                          onChange={e => this.handleChange(e)}
+                        />
+                      </div>
+                      <button
+                        class="btn btn-lg btn-primary btn-block"
+                        type="submit"
+                      >
+                        Login
+                      </button>
+                    </form>
+                    <hr />
+                    {this.state.errorMessage && (
+                      <Alert color="warning">{this.state.errorMessage}</Alert>
+                    )}
+                    <p>
+                      You don't have account yet? <br />
+                      <Link to={"/signup"}>Signup</Link>
+                    </p>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

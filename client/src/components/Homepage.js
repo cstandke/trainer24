@@ -58,6 +58,7 @@ class HomePage extends Component {
     return (
       <div>
         <Jumbotron>
+          <div className="imageHolder" />
           <h1 className="display-4">trainit</h1>
           <p className="lead">Unlock your potential.</p>
           {/* <hr className="my-4" /> */}
@@ -69,6 +70,7 @@ class HomePage extends Component {
             Learn more
           </Button>
         </Jumbotron>
+        <div className="mobileHero" />
 
         <Container fluid={true} className="p-2">
           <h2 className="display-5 my-2 mb-4">Check out our classes:</h2>

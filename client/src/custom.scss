@@ -9,11 +9,35 @@ $secondary: #8bc4b2;
 $text-primary: #313628;
 
 .jumbotron {
-  background-image: url("../src/images/hero.png");
+  background-image: url("../src/components/images/hero.png");
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   background-color: white;
   opacity: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+  .jumbotron {
+    background-image: none;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+    margin-bottom: 5%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .mobileHero {
+    background-image: url("./components/images/hero_small.png");
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+  }
 }
 
 // Import Bootstrap and its default variables
