@@ -5,8 +5,6 @@ import {
   NavItem,
   NavLink,
   NavbarBrand,
-  Form,
-  Input,
   Button,
   NavbarToggler,
   Collapse
