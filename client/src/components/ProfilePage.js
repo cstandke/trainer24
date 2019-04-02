@@ -11,14 +11,17 @@ import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
 // import user_man from "./images/user-man.png";
 
-// import axios from "axios";
+import axios from "axios";
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "Jane ",
-      lastName: "Doe",
+      // firstName: "Jane ",
+      // lastName: "Doe",
+      //this does not make sense if not current user
+      firstName: this.props.userInSession.firstname,
+      lastName: this.props.userInSession.lastname,
       occupation: "Trainer, Lifelong Learner, Wizzard",
       description: "Share something about you",
       imageUrl: ""
@@ -30,6 +33,16 @@ class ProfilePage extends Component {
         "Some quick example text to build on the card title and make up the bulk of the card's content.",
       cardImage: "Card Image"
     };
+
+    this.service = axios.create({
+      baseURL: "http://localhost:5000/api",
+      withCredentials: true
+    });
+  }
+
+  componentDidMount() {
+    this.getMyOffers();
+    this.getMyCourses();
   }
 
   componentDidUpdate(prevProps) {
@@ -44,14 +57,70 @@ class ProfilePage extends Component {
       return <h1>Loading...</h1>;
     }
   }
-  cardSpace() {
-    return (
-      <Row className="mt-4">
-        <CourseCard card={this.card} />
-        <CourseCard card={this.card} />
-        <CourseCard card={this.card} />
-      </Row>
-    );
+
+  getMyOffers() {
+    // console.log("userId:",this.state.userId)
+    return this.service
+      .get(`/offers?ownerId=${this.props.userInSession._id}`)
+      .then(courses => {
+        // console.log(courses.data);
+        // return courses.data.results;
+        const newCardArray = courses.data.map((el, idx) => {
+          // let card = new Card(el.published_title, el.title, el.image_125_H);
+          // return <CourseCard card={card} />;
+          return (
+            <CourseCard
+              key={idx}
+              cardTitle={el.courseTitle}
+              cardText={el.courseDetails}
+              cardImage={el.courseImage}
+              cardLink={el.courseLink}
+            />
+          );
+        });
+        this.setState({ myOffersArray: newCardArray });
+      })
+      .catch(err => {
+        console.log(err);
+        return err;
+      });
+  }
+
+  getMyCourses() {
+    return this.service
+      .get("/offers/myCourses")
+      .then(courses => {
+        console.log(courses.data);
+        // return courses.data.results;
+        const newCardArray = courses.data.map((el, idx) => {
+          // let card = new Card(el.published_title, el.title, el.image_125_H);
+          // return <CourseCard card={card} />;
+          return (
+            <CourseCard
+              key={idx}
+              cardTitle={el.courseTitle}
+              cardText={el.courseDetails}
+              cardImage={el.courseImage}
+              cardLink={el.courseLink}
+            />
+          );
+        });
+        this.setState({ myCoursesArray: newCardArray });
+      })
+      .catch(err => {
+        console.log(err);
+        return err;
+      });
+  }
+
+  myOffersSpace() {
+    // console.log(this.state.cardArray);
+    return <Row>{this.state.myOffersArray}</Row>;
+  }
+
+  myCoursesSpace() {
+    // console.log(this.state.cardArray);
+    return <Row>{this.state.myCoursesArray}</Row>;
   }
 
   render() {
@@ -115,10 +184,10 @@ class ProfilePage extends Component {
 
         <Container id="content" className="mt-3">
           <h2> My Offers</h2>
-          {this.cardSpace()}
+          {this.myOffersSpace()}
           <hr className="mt-5 mb-5" />
-          <h2> Courses history</h2>
-          {this.cardSpace()}
+          <h2> My joined Courses</h2>
+          {this.myCoursesSpace()}
         </Container>
       </div>
     );

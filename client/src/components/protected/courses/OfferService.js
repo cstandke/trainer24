@@ -38,17 +38,19 @@ class OfferService {
       .then(response => response.data);
   };
 
-  getOfferDetail(offerID) {
-    return this.service.get(`/${offerID}`
-    // ,{ //this would be for /detail?id=xxx Syntax
-    //   // params:{
-    //   //   id: offerID
-    //   // }
-    // }
+  getOfferDetail(offerId) {
+    return this.service.get(`/${offerId}`
     ).then(response => response.data)
     .catch(err => console.log(err))
   }
 
+  joinCourse(offerId) {
+    return this.service.post(`/join?courseId=${offerId}`)
+    .then(response => response)
+    .catch(err => err)
+  }
+
+  
 
   //needs to be enabled once there is functionaliy in FE
 
