@@ -15,6 +15,7 @@ let courseResult = function(
   title,
   type,
   details,
+  location,
   imageUrl,
   link,
   owner,
@@ -26,7 +27,7 @@ let courseResult = function(
   this.courseTitle = title;
   this.courseType = type;
   this.courseDetails = details;
-  // this.courseLocation = location;
+  this.courseLocation = location;
   this.courseImage = imageUrl;
   // this.courselink = link;
   if (udemyTestMode) this.courseLink = "https://www.udemy.com" + link;
@@ -44,13 +45,14 @@ let courseResult = function(
 //creates new offer
 offers.post("/create", (req, res, next) => {
   console.log("AT create offer", req.body);
-  const { offername, offertype, offerdescription, imageUrl, fileUrl } = req.body;
+  const { offername, offertype, offerdescription, location, imageUrl, fileUrl } = req.body;
   const offerowner = req.body.loggedInUser._id;
 
   const aNewOffer = new Offer({
     offername: offername,
     offertype: offertype,
     offerdescription: offerdescription,
+    location: location,
     imageUrl: imageUrl,
     fileUrl: fileUrl,
     offerowner: offerowner
@@ -175,6 +177,7 @@ offers.get("/myCourses", (req, res, next) => {
             el.courseId.offername,
             el.courseId.offertype,
             el.courseId.offerdescription,
+            el.courseId.location,
             el.courseId.imageUrl,
             el.courseId._id,
             el.courseId.offerowner,
@@ -212,6 +215,7 @@ offers.get("/:id", (req, res, next) => {
                 theOffer.offername,
                 theOffer.offertype,
                 theOffer.offerdescription,
+                theOffer.location,
                 theOffer.imageUrl,
                 theOffer._id,
                 theOffer.offerowner,
@@ -276,6 +280,7 @@ offers.get("/", (req, res, next) => {
             el.offername,
             el.offertype,
             el.offerdescription,
+            el.location,
             el.imageUrl,
             el._id,
             el.offerowner,

@@ -65,7 +65,7 @@ class OfferDetail extends Component {
   }
 
   render() {
-    // console.log(this.state)
+    console.log(this.state)
     let cardImage = this.state.theOffer.courseImage || defaultImage;
     return (
       <div>
@@ -92,8 +92,10 @@ class OfferDetail extends Component {
                </h5>
                <h5 className="mt-4">Description:</h5>
                <p className="mt-2">{this.state.theOffer.courseDetails}</p>
-               <h5 className="mt-4">Location:</h5>
-               <p>{this.state.theOffer.location}</p>
+               <h5 className="mt-4">Time and place:</h5>
+               <p className="mt-2">{this.state.theOffer.courseLocation}</p>
+               <h5 className="mt-4">Course materials:</h5>
+               <a href={this.state.theOffer.courseFile}>Download Course materials</a>
              </CardText>
              <div className="text-center">
               {this.joinButton()}
