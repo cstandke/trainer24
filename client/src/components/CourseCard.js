@@ -12,8 +12,8 @@ const courseCard = props => {
   };
 
   let cardImageWrapperStyle = {
-    height:"100px",
-    width:"100",
+    height:"200px",
+    width:"100%",
     textAlign:"center"
   }
 
