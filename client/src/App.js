@@ -88,9 +88,10 @@ class App extends Component {
               <CreateOffer userInSession={this.state.loggedInUser} />
             )}
           />
-          <Route
+
+          {/* <Route
             exact
-            path="/profile"
+            path="/profile/:id"
             render={() =>
               // don't use this to redirect users ->
               this.state.loggedInUser ? (
@@ -99,20 +100,68 @@ class App extends Component {
                 <h3>No access. Please login or signup.</h3>
               )
             }
-          />
-          <Route exact path="/OfferDetail/:id" component={OfferDetail} userInSession={this.state.loggedInUser}/>
+          /> */}
+          {/* <Route
+            exact
+            path="/profile/:id"
+            component={ProfilePage}
+            userInSession={this.state.loggedInUser}
+          /> */}
           <Route
             exact
+            // path="/profile/:id/edit"
             path="/profile/edit"
-            render={() =>
+            render={props =>
               // don't use this to redirect users ->
               this.state.loggedInUser ? (
-                <ProfilePageEdit userInSession={this.state.loggedInUser} />
+                <ProfilePageEdit
+                  userInSession={this.state.loggedInUser}
+                  {...props}
+                />
               ) : (
                 <h3>No access. Please login or signup.</h3>
               )
             }
           />
+
+          <Route
+            exact
+            path="/profile/:id"
+            render={props =>
+              // don't use this to redirect users ->
+              this.state.loggedInUser ? (
+                <ProfilePage
+                  userInSession={this.state.loggedInUser}
+                  {...props}
+                />
+              ) : (
+                <h3>No access. Please login or signup.</h3>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/profile"
+            render={props =>
+              // don't use this to redirect users ->
+              this.state.loggedInUser ? (
+                <ProfilePage
+                  userInSession={this.state.loggedInUser}
+                  {...props}
+                />
+              ) : (
+                <h3>No access. Please login or signup.</h3>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/OfferDetail/:id"
+            component={OfferDetail}
+            userInSession={this.state.loggedInUser}
+          />
+
           <Route exact path="/" component={Homepage} />
         </Switch>
       </div>

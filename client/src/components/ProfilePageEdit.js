@@ -14,8 +14,10 @@ import {
 } from "reactstrap";
 import contentEditable from "./contentEditable";
 import UpdateProfileService from "./UpdateProfileService";
+//to use history without using route
 import { withRouter } from "react-router";
 // import { Link } from "react-router-dom"; // import axios from "axios";
+import defaultImage from "./images/user_man.png";
 
 class ProfilePageEdit extends Component {
   constructor(props) {
@@ -23,8 +25,8 @@ class ProfilePageEdit extends Component {
     this.state = {
       firstName: this.props.userInSession.firstname,
       lastName: this.props.userInSession.lastname,
-      occupation: "Trainer, Lifelong Learner, Wizzard",
-      description: "Share something about you",
+      occupation: "",
+      description: "",
       imageUrl: ""
     };
     this.service = new UpdateProfileService();
@@ -123,6 +125,7 @@ class ProfilePageEdit extends Component {
     let Occupation = contentEditable("h4");
     let Description = contentEditable("p");
 
+    let profileImage = this.state.imageUrl || defaultImage;
     return (
       <div>
         <Container id="heading" className="text-center text-primary -mt-4">
@@ -133,8 +136,8 @@ class ProfilePageEdit extends Component {
             <Card mb="4" className="shadow d-flex flex-md-row">
               <CardImg
                 className="bg-secondary text-light"
-                src="https://mobirise.com/extensions/realtym4/assets/images/face4.jpg"
-                alt="https://mobirise.com/extensions/realtym4/assets/images/face4.jpg"
+                src={profileImage}
+                alt="user image"
                 // style={{height:"25vh"}}
               />
               <CardBody>
@@ -157,6 +160,7 @@ class ProfilePageEdit extends Component {
                   <Occupation
                     name="occupation"
                     className="text-secondary my-2"
+                    placeholder="Tutor, Lifelong Learner, Wizard"
                     value={this.state.occupation}
                     onNewValue={this.storeNewValue}
                   />
@@ -166,6 +170,7 @@ class ProfilePageEdit extends Component {
                   <Description
                     name="description"
                     className="text-secondary mt-3"
+                    placeholder="What else do we need to know about you?"
                     value={this.state.description}
                     onNewValue={this.storeNewValue}
                   />
@@ -195,7 +200,7 @@ class ProfilePageEdit extends Component {
             <Button
               onClick={this.submitChanges}
               // call a function that sends this.state in the this.service
-              className="text-primary my-2"
+              className="text-secondary my-2"
             >
               Submit changes
             </Button>

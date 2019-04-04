@@ -9,22 +9,17 @@ import {
 } from "reactstrap";
 import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
-// import user_man from "./images/user-man.png";
+import { withRouter } from "react-router";
 
+import UpdateProfileService from "./UpdateProfileService";
 import axios from "axios";
+import defaultImage from "./../components/images/user_man.png";
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // firstName: "Jane ",
-      // lastName: "Doe",
-      //this does not make sense if not current user
-      firstName: this.props.userInSession.firstname,
-      lastName: this.props.userInSession.lastname,
-      occupation: "Trainer, Lifelong Learner, Wizzard",
-      description: "Share something about you",
-      imageUrl: ""
+      theUser: {}
     };
 
     this.card = {
@@ -34,35 +29,64 @@ class ProfilePage extends Component {
       cardImage: "Card Image"
     };
 
-    this.service = axios.create({
+    this.profileService = new UpdateProfileService();
+
+    this.offerService = axios.create({
       baseURL: "http://localhost:5000/api",
       withCredentials: true
     });
   }
 
+  // componentDidUpdate(prevProps) {
+  //   console.log("prevProps", prevProps);
+  //   if (this.props.userInSession !== prevProps.userInSession) {
+  //     this.setState({
+  //       firstName: this.props.userInSession.firstname,
+  //       lastName: this.props.userInSession.lastname,
+  //       imageUrl: this.props.userInSession.imageUrl
+  //     });
+  //   } else {
+  //     return <h1>Loading...</h1>;
+  //   }
+  // }
+
   componentDidMount() {
+    // console.log("THE PROPS", this.props.match.params);
+    const id = this.props.match.params.id || this.props.userInSession._id;
+    this.getUserDetails(id);
     this.getMyOffers();
     this.getMyCourses();
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("prevProps", prevProps);
-    if (this.props.userInSession !== prevProps.userInSession) {
-      this.setState({
-        firstName: this.props.userInSession.firstname,
-        lastName: this.props.userInSession.lastname,
-        imageUrl: this.props.userInSession.imageUrl
-      });
-    } else {
-      return <h1>Loading...</h1>;
-    }
+  getUserDetails(userId) {
+    this.profileService
+      .getUserDetails(userId)
+      .then(foundUser => {
+        console.log("User OBj", this.state.theUser);
+        this.setState({ theUser: foundUser });
+      })
+      .catch(err => console.log(err));
+    console.log("the user", this.state);
   }
 
+  // getMyProfileData() {
+  //   console.log("userId:", this.state.userId);
+  //   return this.profileService
+  //     .getUserDetails(this.props.userInSession_id)
+  //     .then(theUser => {
+  //       this.setState({
+  //         theUser: Response.data
+  //       });
+  //     });
+  // }
+
   getMyOffers() {
-    // console.log("userId:",this.state.userId)
-    return this.service
-      .get(`/offers?ownerId=${this.props.userInSession._id}`)
+    console.log("userId:", this.state.userId);
+    return this.offerService
+
+      .get(`/offers?ownerId=${this.props.match.params.id}`)
       .then(courses => {
+        console.log("course", courses);
         // console.log(courses.data);
         // return courses.data.results;
         const newCardArray = courses.data.map((el, idx) => {
@@ -87,7 +111,7 @@ class ProfilePage extends Component {
   }
 
   getMyCourses() {
-    return this.service
+    return this.offerService
       .get("/offers/myCourses")
       .then(courses => {
         console.log(courses.data);
@@ -124,9 +148,11 @@ class ProfilePage extends Component {
   }
 
   render() {
+    console.log(this.props.userInSession._id, this.props.match.params.id);
+    console.log(this.state.theUser);
+    let profileImage = this.state.theUser.imageUrl || defaultImage;
     return (
       <div>
-        {/* <Nav id="#sidebar">Sidebar</Nav> */}
         <Container id="heading" className="text-center mt-4">
           <h1>My Profile</h1>
         </Container>
@@ -152,15 +178,21 @@ class ProfilePage extends Component {
         <Container>
           <Row className="mt-3">
             {/* render this button if user is logged in user */}
-            <Link to="/profile/edit" className="mt-3">
-              Edit your profile
-            </Link>
+
+            {/* probably you need this line ======> 183 please investigate */}
+            {this.props.userInSession._id ===
+              (this.props.match.params.id || this.props.userInSession._id) && (
+              <Link to="/profile/edit" className="mt-3">
+                Edit your profile
+              </Link>
+            )}
+
             <br />
             <Card mb="4" className="shadow d-flex flex-md-row">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <CardImg
                 className="bg-secondary text-light"
-                src="client/src/components/images/user_man.png"
+                src={profileImage}
                 alt="default user image"
                 // style={{height:"25vh"}}
               />
@@ -168,13 +200,13 @@ class ProfilePage extends Component {
                 {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
                 <CardText>
                   <h2 className="text-primary mt-2">
-                    {this.state.firstName} {this.state.lastName}
+                    {this.state.theUser.firstName} {this.state.theUser.lastName}
                   </h2>
                   <h4 className="text-secondary my-2">
-                    {this.state.occupation}
+                    {this.state.theUser.occupation}
                   </h4>
                   <p className="text-secondary mt-3">
-                    {this.state.description}
+                    {this.state.theUser.description}
                   </p>
                 </CardText>
               </CardBody>
@@ -193,4 +225,4 @@ class ProfilePage extends Component {
     );
   }
 }
-export default ProfilePage;
+export default withRouter(ProfilePage);
