@@ -64,7 +64,13 @@ class TheNavbar extends Component {
             <span className="navbar-toggler-icon" />
           </NavbarToggler>
           <NavbarBrand href="/">
-            <img class="mb-3 mt-2" src={Logo} alt="" width="116" height="50" />
+            <img
+              className="mb-3 mt-2"
+              src={Logo}
+              alt=""
+              width="116"
+              height="50"
+            />
           </NavbarBrand>
           <Collapse navbar id="navbarContents" isOpen={!this.state.collapsed}>
             <Nav navbar className="mr-auto mt-2 mt-lg-0">

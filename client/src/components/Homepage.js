@@ -73,7 +73,7 @@ class HomePage extends Component {
         <div className="mobileHero" />
 
         <Container fluid={true} className="p-2">
-          <h2 className="display-5 my-2 mb-4">Check out our classes:</h2>
+          <h2 className="display-5 ml-2 ml-4 mb-4">Check out our classes:</h2>
           {this.cardSpace()}
         </Container>
         <Container fluid={true} className="text-center mt-6 mb-4">

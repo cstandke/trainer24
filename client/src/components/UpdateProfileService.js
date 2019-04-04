@@ -31,6 +31,13 @@ class UpdateProfileService {
       })
       .then(response => response.data);
   };
+
+  getUserDetails(userId) {
+    return this.service
+      .get(`/${userId}`)
+      .then(response => response.data)
+      .catch(err => console.log(err));
+  }
 }
 
 export default UpdateProfileService;
