@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import OfferService from "./protected/courses/OfferService";
-import defaultImage from "./images/course.png"
-
+import defaultImage from "./images/course.png";
 
 import {
   Button,
@@ -38,73 +37,99 @@ class OfferDetail extends Component {
   }
 
   joinCourse() {
-    this.service.joinCourse(this.state.offerId)
-    .then(response => {
-      if (response.status===200) {
+    this.service.joinCourse(this.state.offerId).then(response => {
+      if (response.status === 200) {
         console.log("joined this course!");
         this.getOfferDetails(this.state.offerId);
         // console.log(response.data);
-      }
-      else console.log("not successful!")
-    })
+      } else console.log("not successful!");
+    });
   }
 
   joinButton() {
-    if (this.state.theOffer.isJoined) return (
-      <Button primary disabled className="w-50 mt-3">You joined this Course</Button>
-    ) 
+    if (this.state.theOffer.isJoined)
+      return (
+        <Button primary disabled className="w-50 mt-3">
+          You joined this Course
+        </Button>
+      );
     // else if (!this.props.userInSession) return <Button primary disabled className="w-50 mt-3">Login to join this Course</Button>
-    else return (<Button primary className="w-50 mt-3" onClick={()=>this.joinCourse()}>Join this Course</Button>)
+    else
+      return (
+        <Button primary className="w-50 mt-3" onClick={() => this.joinCourse()}>
+          Join this Course
+        </Button>
+      );
+  }
+
+  courseMaterials() {
+    if (this.state.theOffer.isJoined)
+      return (
+        <div>
+          <h5 className="mt-4">Course materials:</h5>
+          <a href={this.state.theOffer.courseFile}>Download Course materials</a>
+        </div>
+      );
+    else
+      return (
+        <div>
+          <h5 className="mt-4">Course materials:</h5>
+          <p>Join this course to see course materials</p>
+        </div>
+      );
   }
 
   componentDidMount() {
     const { params } = this.props.match;
-    this.setState({offerId: params.id})
+    this.setState({ offerId: params.id });
     // console.log("params:",params)
     this.getOfferDetails(params.id);
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     let cardImage = this.state.theOffer.courseImage || defaultImage;
     return (
       <div>
-       <Container>
-       <Row className="mt-3">
-         <Card mb="4" className="shadow w-100">
-           <CardImg
-             className="bg-secondary text-light mx-auto my-1"
-             src={cardImage}
-             alt={cardImage}
-             style={{height:"25vh", maxWidth:"50vh"}}
-           />
-           <CardBody   >
-             <CardText>               
-                <h2 className="text-primary my-4">
-                  {this.state.theOffer.courseTitle}
-               </h2>
-               <h5 className="my-2">{this.state.theOffer.courseType}</h5>
-              <h5>Trainer: {this.state.theOffer.ownerProfileLink &&(
-                  <Link to={this.state.theOffer.ownerProfileLink}>
-                    {this.state.theOffer.courseOwner}
-                 </Link>
-                 )}
-               </h5>
-               <h5 className="mt-4">Description:</h5>
-               <p className="mt-2">{this.state.theOffer.courseDetails}</p>
-               <h5 className="mt-4">Time and place:</h5>
-               <p className="mt-2">{this.state.theOffer.courseLocation}</p>
-               <h5 className="mt-4">Course materials:</h5>
-               <a href={this.state.theOffer.courseFile}>Download Course materials</a>
-             </CardText>
-             <div className="text-center">
-              {this.joinButton()}
-             </div>
-           </CardBody>
-         </Card>
-       </Row>
-     </Container>
-     </div>
+        <Container>
+          <Row className="mt-3">
+            <Card mb="4" className="shadow w-100">
+              <CardImg
+                className="bg-secondary text-light mx-auto m-4"
+                src={cardImage}
+                alt={cardImage}
+                style={{ maxHeight: "25vh", maxWidth: "75vh", width: "auto", height:"auto" }}
+              />
+              <CardBody>
+                <CardText>
+                  <h2 className="text-primary mt-4">
+                    {this.state.theOffer.courseTitle}
+                  </h2>
+                  <h5 className="my-3">{this.state.theOffer.courseType}</h5>
+                  <h5>Udemy Course: <a href={`https://www.udemy.com${this.state.theOffer.udemyUrl}`}>{`https://www.udemy.com${this.state.theOffer.udemyUrl}`}</a></h5> 
+                  <h5>
+                    Trainer:{" "}
+                    {this.state.theOffer.ownerProfileLink && (
+                      <Link to={this.state.theOffer.ownerProfileLink}>
+                        {this.state.theOffer.courseOwner}
+                      </Link>
+                    )}
+                  </h5>
+                  <h5 className="mt-4">Description:</h5>
+                  <div className="mt-2" className="plainText">
+                    {/* <pre>{this.state.theOffer.courseDetails}</pre> */}
+                    {this.state.theOffer.courseDetails}
+                  </div>
+                  <h5 className="mt-4">Time and place:</h5>
+                  <p className="mt-2">{this.state.theOffer.courseLocation}</p>
+                  {this.courseMaterials()}
+                </CardText>
+                <div className="text-center">{this.joinButton()}</div>
+              </CardBody>
+            </Card>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

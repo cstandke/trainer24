@@ -1,30 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Col, Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import { Col, Card, CardImg, CardBody, CardTitle, CardText, Container } from "reactstrap";
 import defaultImage from "./images/course.png";
 // import { Link } from "react-router-dom";
 
 const courseCard = props => {
-  let cardStyle = {
-    // width: "18rem"
+  let cardImageStyle = {
+    maxHeight:"100%",
+    maxWidth:"100%",
+    width:"auto"
   };
+
+  let cardImageWrapperStyle = {
+    height:"200px",
+    width:"100%",
+    textAlign:"center"
+  }
 
   let cardLink = props.cardLink || "/OfferDetail";
   let cardImage = props.cardImage || defaultImage;
+  let cardTitle = props.cardTitle || "";
+  let cardText = props.cardText || "";
   let linkWrapper;
 
-  let cardContents = function() {
+  let cardContents = function() { 
     return (
-      <Card style={cardStyle} className="shadow my-2">
+      <Card className="shadow my-2">
         {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
-        <CardImg
-          className="bg-secondary p-5 text-light"
+        <Container className="bg-primary" style={cardImageWrapperStyle}>
+        <CardImg style={cardImageStyle} className="bg-secondary p-1 text-light d-block m-auto"
           src={cardImage}
           alt={cardImage}
         />
+        </Container>
         <CardBody>
-          <CardTitle tag="h5">{props.cardTitle}</CardTitle>
-          <CardText>{props.cardText}</CardText>
+          <CardTitle tag="h5">{cardTitle.substr(0,100)}</CardTitle>
+          <CardText>{cardText.substr(0,200)}</CardText>
         </CardBody>
       </Card>
     );

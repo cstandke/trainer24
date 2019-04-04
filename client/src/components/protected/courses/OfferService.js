@@ -54,6 +54,11 @@ class OfferService {
     .catch(err => err)
   }
 
+  getUdemyData(urlString) {
+    return this.service.get(`http://localhost:5000/api/offers/udemyCourseInfo?search=${urlString}`)
+    .then (response => response)
+    .catch(err => err)
+  }
   
 
   //needs to be enabled once there is functionaliy in FE

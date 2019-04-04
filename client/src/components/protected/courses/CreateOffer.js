@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import OfferService from "./OfferService";
 import defaultImage from "../../images/course.png";
+import htmlToText from "html-to-text"
 
 import {
   Col,
@@ -23,9 +24,13 @@ class CreateCourse extends Component {
       offerdescription: "",
       location: "",
       imageUrl: undefined,
-      fileUrl: undefined
+      fileUrl: undefined,
+      udemyId:"",
+      udemyUrl:"",
+      udemyTitle:"",
     };
     this.service = new OfferService();
+    this.timeout = null;
     console.log(this.props);
     console.log(this.state);
   }
@@ -112,6 +117,29 @@ class CreateCourse extends Component {
       });
   };
 
+  importUdemyData = e => {
+    let { name, value } = e.target;
+    let delay = 1500
+    clearTimeout(this.timeout)
+    this.setState({ [name]: value })
+    this.timeout = setTimeout(() => {
+      // console.log("State change!");
+      this.service.getUdemyData(this.state.udemyUrl)
+      .then(response => {
+        if (response.message) return 
+        console.log(response.data)
+        this.setState({udemyId:response.data.id})
+        this.setState({udemyTitle:response.data.title})
+        if (this.state.offername==="") this.setState({offername:response.data.title})
+        if (this.state.offerdescription==="") this.setState({
+          offerdescription:htmlToText.fromString(response.data.description)
+        })
+        this.setState({imageUrl:response.data.image_480x270})
+        this.setState({udemyUrl:response.data.url})
+      })
+    },delay);
+  }
+
   handleChange = event => {
     let { name, value } = event.target;
     this.setState({ [name]: value });
@@ -152,6 +180,21 @@ class CreateCourse extends Component {
               your selection > here add component to search courses from udemy
               that you want to create an offer for
             </p>
+            <FormGroup row>
+              <Label for="udemyUrl" sm={2}>
+               Udemy course url:
+              </Label>
+              <Col sm={10}>
+                <Input
+                  onChange={this.importUdemyData}
+                  value={this.state.udemyUrl}
+                  type="text"
+                  name="udemyUrl"
+                  id="udemyUrl"
+                  placeholder="e.g. /complete-python-bootcamp/"
+                />
+              </Col>
+            </FormGroup>
             <FormGroup row>
               <Label for="offerName" sm={2}>
                 Title of your offer
