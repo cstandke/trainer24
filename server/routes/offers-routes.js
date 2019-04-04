@@ -193,6 +193,39 @@ offers.get("/myCourses", (req, res, next) => {
       });
 });
 
+offers.get("/udemyCourseInfo", (req,res,next) => {
+  let searchString="https://www.udemy.com/api-2.0/courses";
+  if (req.query.search) searchString+=`?search=${req.query.search}`
+  axios
+      .get(searchString, {
+        auth: {
+          username: process.env.UDEMY_API_ID,
+          password: process.env.UDEMY_API_SECRET
+        }
+      })
+      .then(response => {
+          console.log("first result", response.data.results[0])
+          if (response.data.results.length===0) {
+            res.status(200).json({message: "No results"})
+            return
+          }
+          let detailString = `https://www.udemy.com/api-2.0/courses/${response.data.results[0].id}?fields[course]=@all`
+          axios.get(detailString)
+          .then (courseData => {
+            // res.status(200).json(courseData.data)
+            res.send(courseData.data)
+          })
+          .catch(error => {
+            res.status(400).json({error: error});
+          })
+      })
+      .catch(error => {
+        // res.send(error)
+        // console.log(error)
+        res.status(400).json({error: error});
+      });
+})
+
 //show details for one offer
 offers.get("/:id", (req, res, next) => {
   let isJoined = false;

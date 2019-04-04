@@ -40,5 +40,10 @@ $text-primary: #313628;
   }
 }
 
+.plainText {
+  white-space: pre-line;
+}
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
+
