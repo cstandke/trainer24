@@ -17,9 +17,9 @@ const offerSchema = new Schema({
     ref: "User"
   },
   imageUrl: { type: String },
-  fileUrl: { type: String, default: "/components/images/courses.png" },
-  udemyId: { type: String, default: "567828" },
-  udemyUrl: { type: String, default: "/complete-python-bootcamp/" }
+  fileUrl: { type: String},
+  udemyId: { type: String},
+  udemyUrl: { type: String}
 });
 
 const Offer = mongoose.model("Offer", offerSchema);

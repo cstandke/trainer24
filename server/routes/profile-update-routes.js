@@ -5,7 +5,6 @@ const User = require("../models/basic-user");
 
 // include CLOUDINARY:
 const uploader = require("../configs/cloudinary");
-// const IncomingForm = require('formidable').IncomingForm
 
 // profile/:id/edit
 profileUpdateRoutes.post("/profile/edit", (req, res, next) => {
