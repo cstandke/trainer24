@@ -5,7 +5,8 @@ import {
   Card,
   CardImg,
   CardBody,
-  CardText 
+  CardText,
+  Button
 } from "reactstrap";
 import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
@@ -22,12 +23,12 @@ class ProfilePage extends Component {
       theUser: {}
     };
 
-    this.card = {
-      cardTitle: "Card title",
-      cardText:
-        "Some quick example text to build on the card title and make up the bulk of the card's content.",
-      cardImage: "Card Image"
-    };
+    // this.card = {
+    //   cardTitle: "Card title",
+    //   cardText:
+    //     "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    //   cardImage: "Card Image"
+    // };
 
     this.profileService = new UpdateProfileService();
 
@@ -60,7 +61,7 @@ class ProfilePage extends Component {
     console.log("userId:", this.state.userId);
     return this.offerService
 
-      .get(`/offers?ownerId=${this.props.match.params.id}`)
+      .get(`/offers?ownerId=${this.props.match.params.id || this.props.userInSession._id}`)
       .then(courses => {
         console.log("course", courses);
         // console.log(courses.data);
@@ -127,6 +128,19 @@ class ProfilePage extends Component {
     console.log(this.props.userInSession._id, this.props.match.params.id);
     console.log(this.state.theUser);
     let profileImage = this.state.theUser.imageUrl || defaultImage;
+    let cardImageStyle = {
+      maxWidth:"100%",
+      maxHeight:"100%",
+      width:"auto",
+      height:"auto"
+    }
+
+    let cardImageWrapperStyle = {
+      minHeight: "200px",
+      maxHeight:"400px",
+      width:"400px",
+      textAlign:"center"
+    }
     return (
       <div>
         <Container id="heading" className="text-center mt-4">
@@ -139,20 +153,22 @@ class ProfilePage extends Component {
             {/* probably you need this line ======> 183 please investigate */}
             {this.props.userInSession._id ===
               (this.props.match.params.id || this.props.userInSession._id) && (
-              <Link to="/profile/edit" className="mt-3">
-                Edit your profile
+              <Link to="/profile/edit" className="mt-3 mx-4">
+                <Button outline primary>Edit your profile</Button>
               </Link>
             )}
 
             <br />
-            <Card mb="4" className="shadow d-flex flex-md-row">
+            <Card mb="4" className="shadow d-flex flex-md-row w-100 m-3">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
-              <CardImg
+              <Container style={cardImageWrapperStyle}>
+              <CardImg style={cardImageStyle}
                 className="bg-secondary text-light"
                 src={profileImage}
                 alt="default user image"
                 // style={{height:"25vh"}}
               />
+              </Container>
               <CardBody>
                 {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
                 <CardText>
@@ -170,6 +186,7 @@ class ProfilePage extends Component {
             </Card>
           </Row>
         </Container>
+        
 
         <Container id="content" className="mt-3">
           <h2> My Offers</h2>

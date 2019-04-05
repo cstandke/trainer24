@@ -23,50 +23,15 @@ class ProfilePageEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: this.props.userInSession.firstname,
-      lastName: this.props.userInSession.lastname,
-      occupation: "",
-      description: "",
-      imageUrl: ""
+      firstName: this.props.userInSession.firstname || "Hendik",
+      lastName: this.props.userInSession.lastname || "W.",
+      occupation: this.props.userInSession.occupation || "Teacher, lifelong learner, JS Wizard, Giraffe tamer",
+      description: this.props.userInSession.description || "What else do we need to know about you?",
+      imageUrl: this.props.userInSession.imageUrl || defaultImage
     };
     this.service = new UpdateProfileService();
     console.log("CONSTRUCTOR", this.props.userInSession);
   }
-
-  //do not update for all props, only for user in session (componentWillReceiveProps will render on any state change)
-  // componentWillUpdate() {
-  //   console.log("WILL UODATE PROPS", this.props.userInSession);
-  //   if (this.props.userInSession) {
-  //     this.setState({
-  //       firstName: this.props.userInSession.firstname,
-  //       lastName: this.props.userInSession.lastname,
-  //       imageUrl: this.props.userInSession.imageUrl
-  //     });
-  //   }
-  // }
-
-  //   componentDidUpdate(prevProps) {
-  //     debugger;
-  //     console.log("prevProps", prevProps);
-  //     if (this.props.userInSession !== prevProps.userInSession) {
-  //       debugger;
-  //       this.setState({
-  //         firstName: this.props.userInSession.firstname,
-  //         lastName: this.props.userInSession.lastname,
-  //         imageUrl: this.props.userInSession.imageUrl
-  //       });
-  //     } else {
-  //       return <h1>Loading...</h1>;
-  //     }
-  //   }
-
-  //   componentWillUpdate(nextProps) {
-  //     this.setState({
-  //       firstName: nextProps.userInSession.firstname,
-  //       lastName: nextProps.userInSession.lastname,
-  //       imageUrl: nextProps.userInSession.imageUrl
-  //     });
-  //   }
 
   submitChanges = () => {
     //event.preventDefault();
@@ -125,7 +90,19 @@ class ProfilePageEdit extends Component {
     let Occupation = contentEditable("h4");
     let Description = contentEditable("p");
 
-    let profileImage = this.state.imageUrl || defaultImage;
+    let cardImageStyle = {
+      maxWidth:"100%",
+      maxHeight:"100%",
+      width:"auto",
+      height:"auto"
+    }
+
+    let cardImageWrapperStyle = {
+      minHeight: "200px",
+      maxHeight:"400px",
+      width:"400px",
+      textAlign:"center"
+    }
     return (
       <div>
         <Container id="heading" className="text-center text-primary -mt-4">
@@ -134,14 +111,15 @@ class ProfilePageEdit extends Component {
         <Container>
           <Row className="mt-3">
             <Card mb="4" className="shadow d-flex flex-md-row">
-              <CardImg
+            <Container style={cardImageWrapperStyle}>
+              <CardImg style={cardImageStyle}
                 className="bg-secondary text-light"
-                src={profileImage}
+                src={this.state.imageUrl}
                 alt="user image"
                 // style={{height:"25vh"}}
               />
+              </Container>
               <CardBody>
-                {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
                 <CardText tag="div">
                   <FirstName
                     name="firstName"
@@ -149,37 +127,27 @@ class ProfilePageEdit extends Component {
                     value={this.state.firstName}
                     onNewValue={this.storeNewValue}
                   />
-                  {/* <h2 className="text-primary mt-2">{this.props.userInSession.firstName}</h2> */}
                   <LastName
                     name="lastName"
                     className="text-primary mt-2"
                     value={this.state.lastName}
                     onNewValue={this.storeNewValue}
                   />
-                  {/* <h2 className="text-primary mt-2">{this.lastName}</h2> */}
                   <Occupation
                     name="occupation"
-                    className="text-secondary my-2"
+                    className="text-secondary my-3"
                     placeholder="Tutor, Lifelong Learner, Wizard"
                     value={this.state.occupation}
                     onNewValue={this.storeNewValue}
                   />
-                  {/* <h4 className="text-secondary my-2">
-                    {this.occupation}
-                  </h4> */}
                   <Description
                     name="description"
-                    className="text-secondary mt-3"
+                    className="text-secondary my-3"
                     placeholder="What else do we need to know about you?"
                     value={this.state.description}
                     onNewValue={this.storeNewValue}
                   />
-                  {/* <p className="text-secondary mt-3">{this.description}</p> */}
-                  <br />
-                  <FormGroup row>
-                    <Label className="text-primary mt-3" for="File">
-                      Show us your pretty face
-                    </Label>
+                  <FormGroup row className="mx-1 my-5">
                     <Input
                       className="text-secondary"
                       onChange={this.handleFileUpload}
@@ -194,25 +162,19 @@ class ProfilePageEdit extends Component {
                 </CardText>
               </CardBody>
             </Card>
-            {/*<Col className="text-center"> */}
           </Row>
           <div className="text-center">
             <Button
+              primary
+              outline
               onClick={this.submitChanges}
               // call a function that sends this.state in the this.service
-              className="text-secondary my-2"
+              className="my-2"
             >
               Submit changes
             </Button>
           </div>
         </Container>
-        {/* <Container id="content" className="mt-3">
-          <h2> My Offers</h2>
-          {this.cardSpace()}
-          <hr className="mt-5 mb-5" />
-          <h2> Courses history</h2>
-          {this.cardSpace()}
-        </Container> */}
       </div>
     );
   }

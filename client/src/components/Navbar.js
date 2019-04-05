@@ -45,7 +45,7 @@ class TheNavbar extends Component {
     if (this.state.loggedInUser) {
       return (
         <NavItem>
-          <Button onClick={() => this.logoutUser()}>Logout</Button>
+          <Button primary outline onClick={() => this.logoutUser()}>Logout</Button>
         </NavItem>
       );
     } else return null;
