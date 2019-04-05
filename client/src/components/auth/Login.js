@@ -86,7 +86,7 @@ class Login extends Component {
                       onSubmit={this.handleFormSubmit}
                     >
                       <div class="form-group">
-                        <label>Username or Email:</label>
+                        <label>Username:</label>
                         <input
                           type="text"
                           className="form-control"

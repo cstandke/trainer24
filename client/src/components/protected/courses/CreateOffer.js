@@ -44,7 +44,10 @@ class CreateCourse extends Component {
       offerdescription,
       location,
       imageUrl,
-      fileUrl
+      fileUrl,
+      udemyId,
+      udemyUrl,
+      udemyTitle
     } = this.state;
     const loggedInUser = this.props.userInSession;
     this.service
@@ -55,6 +58,9 @@ class CreateCourse extends Component {
         location,
         imageUrl,
         fileUrl,
+        udemyId,
+        udemyUrl,
+        udemyTitle,
         loggedInUser
       )
       .then(response => {
@@ -64,7 +70,10 @@ class CreateCourse extends Component {
           offerdescription: "",
           location: "",
           imageUrl: undefined,
-          fileUrl: undefined
+          fileUrl: undefined,
+          udemyId:"",
+          udemyUrl:"",
+          udemyTitle:""
         });
         document.getElementById("courseForm").reset();
       })

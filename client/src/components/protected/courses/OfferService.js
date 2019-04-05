@@ -27,6 +27,9 @@ class OfferService {
     location,
     imageUrl,
     fileUrl,
+    udemyId,
+    udemyUrl,
+    udemyTitle,
     loggedInUser
   ) => {
     return this.service
@@ -37,6 +40,9 @@ class OfferService {
         location,
         imageUrl,
         fileUrl,
+        udemyId,
+        udemyUrl,
+        udemyTitle,
         loggedInUser
       })
       .then(response => response.data);

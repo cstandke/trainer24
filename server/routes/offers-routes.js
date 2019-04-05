@@ -45,7 +45,7 @@ let courseResult = function(
 //creates new offer
 offers.post("/create", (req, res, next) => {
   console.log("AT create offer", req.body);
-  const { offername, offertype, offerdescription, location, imageUrl, fileUrl } = req.body;
+  const { offername, offertype, offerdescription, location, imageUrl, fileUrl, udemyId, udemyUrl, udemyTitle } = req.body;
   const offerowner = req.body.loggedInUser._id;
 
   const aNewOffer = new Offer({
@@ -55,6 +55,9 @@ offers.post("/create", (req, res, next) => {
     location: location,
     imageUrl: imageUrl,
     fileUrl: fileUrl,
+    udemyId: udemyId,
+    udemyUrl: udemyUrl,
+    udemyTitle: udemyTitle,
     offerowner: offerowner
   });
 

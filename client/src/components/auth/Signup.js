@@ -92,7 +92,6 @@ class Signup extends Component {
                       className="form-signin"
                       onSubmit={this.handleFormSubmit}
                     >
-                      <img class="mb-4" src="" alt="" width="72" height="72" />
                       <div className="form-group">
                         <label>First name:</label>
                         <input
