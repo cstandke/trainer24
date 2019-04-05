@@ -57,9 +57,9 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <Jumbotron>
+        <Jumbotron className="bg-white">
           <div className="imageHolder" />
-          <h1 className="display-4">trainit</h1>
+          <h1 className="display-4">train!t</h1>
           <p className="lead">Unlock your potential.</p>
           {/* <hr className="my-4" /> */}
           <p>

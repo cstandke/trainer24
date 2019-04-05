@@ -16,6 +16,7 @@ $text-secondary: #ffffff;
   background-repeat: no-repeat;
   background-color: white;
   opacity: 50%;
+  // height: 500px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -25,7 +26,7 @@ $text-secondary: #ffffff;
     background-position: center;
     background-repeat: no-repeat;
     background-color: white;
-    margin-bottom: 5%;
+    // margin-bottom: 5%;
   }
 }
 
