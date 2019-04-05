@@ -112,8 +112,6 @@ authRoutes.post("/logout", (req, res, next) => {
   res.status(200).json({ message: "Log out success!" });
 });
 
-//replace this with dashboard??
-
 authRoutes.get("/loggedin", (req, res, next) => {
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
