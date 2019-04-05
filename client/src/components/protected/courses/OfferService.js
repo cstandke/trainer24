@@ -3,7 +3,7 @@ import axios from "axios";
 class OfferService {
   constructor() {
     let service = axios.create({
-      baseURL: "http://localhost:5000/api/offers",
+      baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
       withCredentials: true
     });
     this.service = service;
@@ -12,7 +12,7 @@ class OfferService {
   handleUpload(theFile) {
     // console.log('file in service: ', theFile)
     return this.service
-      .post("/imageupload", theFile)
+      .post("/offers/imageupload", theFile)
       .then(res => res.data)
       .catch(err => {
         // console.error(err);
@@ -30,7 +30,7 @@ class OfferService {
     loggedInUser
   ) => {
     return this.service
-      .post("/create", {
+      .post("/offers/create", {
         offername,
         offertype,
         offerdescription,
@@ -43,19 +43,19 @@ class OfferService {
   };
 
   getOfferDetail(offerId) {
-    return this.service.get(`/${offerId}`
+    return this.service.get(`/offers/${offerId}`
     ).then(response => response.data)
     .catch(err => console.log(err))
   }
 
   joinCourse(offerId) {
-    return this.service.post(`/join?courseId=${offerId}`)
+    return this.service.post(`/offers/join?courseId=${offerId}`)
     .then(response => response)
     .catch(err => err)
   }
 
   getUdemyData(urlString) {
-    return this.service.get(`http://localhost:5000/api/offers/udemyCourseInfo?search=${urlString}`)
+    return this.service.get(`/offers/udemyCourseInfo?search=${urlString}`)
     .then (response => response)
     .catch(err => err)
   }

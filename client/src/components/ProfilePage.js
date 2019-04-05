@@ -5,7 +5,7 @@ import {
   Card,
   CardImg,
   CardBody,
-  CardText /*  */
+  CardText 
 } from "reactstrap";
 import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
@@ -32,23 +32,10 @@ class ProfilePage extends Component {
     this.profileService = new UpdateProfileService();
 
     this.offerService = axios.create({
-      baseURL: "http://localhost:5000/api",
+      baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
       withCredentials: true
     });
   }
-
-  // componentDidUpdate(prevProps) {
-  //   console.log("prevProps", prevProps);
-  //   if (this.props.userInSession !== prevProps.userInSession) {
-  //     this.setState({
-  //       firstName: this.props.userInSession.firstname,
-  //       lastName: this.props.userInSession.lastname,
-  //       imageUrl: this.props.userInSession.imageUrl
-  //     });
-  //   } else {
-  //     return <h1>Loading...</h1>;
-  //   }
-  // }
 
   componentDidMount() {
     // console.log("THE PROPS", this.props.match.params);
@@ -68,17 +55,6 @@ class ProfilePage extends Component {
       .catch(err => console.log(err));
     console.log("the user", this.state);
   }
-
-  // getMyProfileData() {
-  //   console.log("userId:", this.state.userId);
-  //   return this.profileService
-  //     .getUserDetails(this.props.userInSession_id)
-  //     .then(theUser => {
-  //       this.setState({
-  //         theUser: Response.data
-  //       });
-  //     });
-  // }
 
   getMyOffers() {
     console.log("userId:", this.state.userId);
@@ -156,25 +132,6 @@ class ProfilePage extends Component {
         <Container id="heading" className="text-center mt-4">
           <h1>My Profile</h1>
         </Container>
-
-        {/* <Container>
-          <Row className="mt-4">
-            <Col
-              sm="3"
-              className="bg-primary shadow"
-              style={this.profileImageStyle}
-            >
-            </Col>
-            <Col sm="8" className="py-3 px-4 shadow">
-              <h2 className="text-primary mt-2">
-                {this.user.firstName} {this.user.lastName}
-              </h2>
-              <h4 className="text-secondary my-2">{this.user.occupation}</h4>
-              <p className="text-secondary mt-3">{this.user.description}</p>
-            </Col>
-          </Row>
-        </Container> */}
-
         <Container>
           <Row className="mt-3">
             {/* render this button if user is logged in user */}

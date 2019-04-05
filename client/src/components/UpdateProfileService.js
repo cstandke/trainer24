@@ -3,7 +3,7 @@ import axios from "axios";
 class UpdateProfileService {
   constructor() {
     let service = axios.create({
-      baseURL: "http://localhost:5000/api/users",
+      baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
       withCredentials: true
     });
     this.service = service;
@@ -12,7 +12,7 @@ class UpdateProfileService {
   handleUpload(theFile) {
     // console.log('file in service: ', theFile)
     return this.service
-      .post("/imageupload", theFile)
+      .post("/users/imageupload", theFile)
       .then(res => res.data)
       .catch(err => {
         // console.error(err);
@@ -22,7 +22,7 @@ class UpdateProfileService {
 
   editProfile = (firstName, lastName, occupation, description, imageUrl) => {
     return this.service
-      .post("/profile/edit", {
+      .post("/users/profile/edit", {
         firstName,
         lastName,
         occupation,
@@ -34,7 +34,7 @@ class UpdateProfileService {
 
   getUserDetails(userId) {
     return this.service
-      .get(`/${userId}`)
+      .get(`/users/${userId}`)
       .then(response => response.data)
       .catch(err => console.log(err));
   }
