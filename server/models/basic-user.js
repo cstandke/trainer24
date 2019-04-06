@@ -14,6 +14,10 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+
+  description: String,
+  occupation: String,
+
   email: {
     type: String,
     required: true
@@ -26,7 +30,7 @@ const userSchema = new Schema({
   userId: String,
   type: String,
 
-  image: { type: String }
+  imageUrl: { type: String }
 });
 
 const User = mongoose.model("User", userSchema);

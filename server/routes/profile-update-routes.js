@@ -8,6 +8,7 @@ const uploader = require("../configs/cloudinary");
 
 // profile/:id/edit
 profileUpdateRoutes.post("/profile/edit", (req, res, next) => {
+  // console.log ("received", req.body)
   if (req.isAuthenticated()) {
     User.findByIdAndUpdate(
       // { _id: req.params.id },
@@ -18,7 +19,7 @@ profileUpdateRoutes.post("/profile/edit", (req, res, next) => {
           lastname: req.body.lastName,
           occupation: req.body.occupation,
           description: req.body.description,
-          image: req.body.imageUrl
+          imageUrl: req.body.imageUrl
         }
       },
       { new: true }
@@ -65,7 +66,7 @@ profileUpdateRoutes.get("/:id", (req, res, next) => {
         lastName: theUser.lastname,
         description: theUser.description,
         occupation: theUser.occupation,
-        imageUrl: theUser.image
+        imageUrl: theUser.imageUrl
       });
     })
     .catch(err => {
