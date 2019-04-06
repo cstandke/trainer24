@@ -14,7 +14,7 @@ import { withRouter } from "react-router";
 
 import UpdateProfileService from "./UpdateProfileService";
 import axios from "axios";
-// import defaultImage from "./../components/images/user_man.png";
+import defaultImage from "./../components/images/user_man.png";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class ProfilePage extends Component {
     // };
 
     this.profileService = new UpdateProfileService();
-    this.defaultImage = "./images/user_man.png"
+    // this.defaultImage = "./images/user_man.png"
     this.offerService = axios.create({
       baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
       withCredentials: true
@@ -127,7 +127,7 @@ class ProfilePage extends Component {
   render() {
     console.log(this.props.userInSession._id, this.props.match.params.id);
     console.log(this.state.theUser);
-    let profileImage = this.state.theUser.imageUrl || this.defaultImage;
+    let profileImage = this.state.theUser.imageUrl || defaultImage;
     let cardImageStyle = {
       maxWidth:"100%",
       maxHeight:"100%",
