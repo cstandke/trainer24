@@ -17,7 +17,7 @@ import UpdateProfileService from "./UpdateProfileService";
 //to use history without using route
 import { withRouter } from "react-router";
 // import { Link } from "react-router-dom"; // import axios from "axios";
-// import defaultImage from "./images/user_man.png";
+import defaultImage from "./images/user_man.png";
 
 class ProfilePageEdit extends Component {
   constructor(props) {
@@ -27,10 +27,10 @@ class ProfilePageEdit extends Component {
       lastName: this.props.userInSession.lastname || "W.",
       occupation: this.props.userInSession.occupation || "Teacher, lifelong learner, JS Wizard, Giraffe tamer",
       description: this.props.userInSession.description || "What else do we need to know about you?",
-      imageUrl: this.props.userInSession.imageUrl || "./images/user_man.png"
+      imageUrl: this.props.userInSession.imageUrl
     };
     this.service = new UpdateProfileService();
-    this.defaultImage = "./images/user_man.png"
+    // this.defaultImage = "./images/user_man.png"
     console.log("CONSTRUCTOR", this.props.userInSession);
   }
 
