@@ -92,7 +92,7 @@ class ProfilePageEdit extends Component {
     let LastName = contentEditable("h2");
     let Occupation = contentEditable("h4");
     let Description = contentEditable("p");
-    let profileImage = this.state.imageUrl || this.defaultImage;
+    let profileImage = this.state.imageUrl || defaultImage;
     let cardImageStyle = {
       maxWidth:"100%",
       maxHeight:"100%",
