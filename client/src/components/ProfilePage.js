@@ -61,7 +61,10 @@ class ProfilePage extends Component {
     console.log("userId:", this.state.userId);
     return this.offerService
 
-      .get(`/offers?ownerId=${this.props.match.params.id || this.props.userInSession._id}`)
+      .get(
+        `/offers?ownerId=${this.props.match.params.id ||
+          this.props.userInSession._id}`
+      )
       .then(courses => {
         console.log("course", courses);
         // console.log(courses.data);
@@ -121,7 +124,18 @@ class ProfilePage extends Component {
 
   myCoursesSpace() {
     // console.log(this.state.cardArray);
-    return <Row>{this.state.myCoursesArray}</Row>;
+    if (
+      this.props.userInSession._id ===
+      (this.props.match.params.id || this.props.userInSession._id)
+    ) {
+      return (
+        <div>
+          <hr className="mt-5 mb-5" />
+          <h2> My joined Courses</h2>
+          <Row>{this.state.myCoursesArray}</Row>;
+        </div>
+      );
+    }
   }
 
   render() {
@@ -129,18 +143,18 @@ class ProfilePage extends Component {
     console.log(this.state.theUser);
     let profileImage = this.state.theUser.imageUrl || defaultImage;
     let cardImageStyle = {
-      maxWidth:"100%",
-      maxHeight:"100%",
-      width:"auto",
-      height:"auto"
-    }
+      maxWidth: "100%",
+      maxHeight: "100%",
+      width: "auto",
+      height: "auto"
+    };
 
     let cardImageWrapperStyle = {
       minHeight: "200px",
-      maxHeight:"400px",
-      width:"400px",
-      textAlign:"center"
-    }
+      maxHeight: "400px",
+      width: "400px",
+      textAlign: "center"
+    };
     return (
       <div>
         <Container id="heading" className="text-center mt-4">
@@ -154,7 +168,9 @@ class ProfilePage extends Component {
             {this.props.userInSession._id ===
               (this.props.match.params.id || this.props.userInSession._id) && (
               <Link to="/profile/edit" className="mt-3 mx-4">
-                <Button outline primary>Edit your profile</Button>
+                <Button outline primary>
+                  Edit your profile
+                </Button>
               </Link>
             )}
 
@@ -162,12 +178,13 @@ class ProfilePage extends Component {
             <Card mb="4" className="shadow d-flex flex-md-row w-100 m-3">
               {/* <img src="..." className="card-img-top" alt="Image goes here" /> */}
               <Container style={cardImageWrapperStyle}>
-              <CardImg style={cardImageStyle}
-                className="bg-secondary text-light"
-                src={profileImage}
-                alt="default user image"
-                // style={{height:"25vh"}}
-              />
+                <CardImg
+                  style={cardImageStyle}
+                  className="bg-secondary text-light"
+                  src={profileImage}
+                  alt="default user image"
+                  // style={{height:"25vh"}}
+                />
               </Container>
               <CardBody>
                 {/* <CardTitle tag="h5">{props.card.cardTitle}</CardTitle> */}
@@ -186,13 +203,10 @@ class ProfilePage extends Component {
             </Card>
           </Row>
         </Container>
-        
 
         <Container id="content" className="mt-3">
           <h2> My Offers</h2>
           {this.myOffersSpace()}
-          <hr className="mt-5 mb-5" />
-          <h2> My joined Courses</h2>
           {this.myCoursesSpace()}
         </Container>
       </div>
