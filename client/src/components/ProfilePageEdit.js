@@ -160,7 +160,7 @@ class ProfilePageEdit extends Component {
                   <FormGroup row className="mx-1 my-5">
                     <Input
                       className="text-secondary"
-                      // onChange={this.handleFileUpload}
+                      onChange={this.handleFileUpload}
                       type="file"
                       name="file"
                       id="File"
