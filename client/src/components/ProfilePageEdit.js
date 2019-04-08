@@ -8,7 +8,6 @@ import {
   CardText /*  */,
   FormGroup,
   FormText,
-  Label,
   Input,
   Button
 } from "reactstrap";
@@ -25,6 +24,7 @@ class ProfilePageEdit extends Component {
     this.state = {
       firstName: this.props.userInSession.firstname || "Hendik",
       lastName: this.props.userInSession.lastname || "W.",
+      email: this.props.userInSession.email || "email",
       occupation: this.props.userInSession.occupation || "Teacher, lifelong learner, JS Wizard, Giraffe tamer",
       description: this.props.userInSession.description || "What else do we need to know about you?",
       imageUrl: this.props.userInSession.imageUrl
@@ -40,12 +40,13 @@ class ProfilePageEdit extends Component {
     const {
       firstName,
       lastName,
+      email,
       occupation,
       description,
       imageUrl
     } = this.state;
     this.service
-      .editProfile(firstName, lastName, occupation, description, imageUrl)
+      .editProfile(firstName, lastName, email, occupation, description, imageUrl)
       .then(response => {
         //console.log("INSIDE PROMISE", response);
         //redirect here
@@ -91,6 +92,7 @@ class ProfilePageEdit extends Component {
     let FirstName = contentEditable("h2");
     let LastName = contentEditable("h2");
     let Occupation = contentEditable("h4");
+    let Email = contentEditable("h4");
     let Description = contentEditable("p");
     let profileImage = this.state.imageUrl || defaultImage;
     let cardImageStyle = {
@@ -137,7 +139,6 @@ class ProfilePageEdit extends Component {
                     value={this.state.lastName}
                     // onNewValue={this.storeNewValue}
                     onChange={this.storeNewValue}
-
                   />
                   <Occupation
                     name="occupation"
@@ -146,7 +147,14 @@ class ProfilePageEdit extends Component {
                     value={this.state.occupation}
                     // onNewValue={this.storeNewValue}
                     onChange={this.storeNewValue}
-
+                  />
+                  <Email
+                    name="email"
+                    className="text-secondary my-3"
+                    placeholder="What else do we need to know about you?"
+                    value={this.state.email}
+                    // onNewValue={this.storeNewValue}
+                    onChange={this.storeNewValue}
                   />
                   <Description
                     name="description"
@@ -155,7 +163,6 @@ class ProfilePageEdit extends Component {
                     value={this.state.description}
                     // onNewValue={this.storeNewValue}
                     onChange={this.storeNewValue}
-
                   />
                   <FormGroup row className="mx-1 my-5">
                     <Input

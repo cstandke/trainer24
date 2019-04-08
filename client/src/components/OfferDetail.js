@@ -22,8 +22,12 @@ class OfferDetail extends Component {
     };
     this.service = new OfferService();
     // console.log(this.props);
+    console.log("userInSession",this.props.userInSession)
+
     // console.log(this.state);
     this.joinCourse = this.joinCourse.bind(this);
+    this.leaveCourse = this.leaveCourse.bind(this);
+
   }
 
   getOfferDetails(offerID) {
@@ -46,17 +50,27 @@ class OfferDetail extends Component {
     });
   }
 
+  leaveCourse() {
+    this.service.leaveCourse(this.state.offerId).then(response => {
+      if (response.status === 200) {
+        console.log("left this course!");
+        this.getOfferDetails(this.state.offerId);
+        // console.log(response.data);
+      } else console.log("not successful!");
+    });
+  }
+
   joinButton() {
     if (this.state.theOffer.isJoined)
       return (
-        <Button primary disabled className="w-50 mt-3">
-          You joined this Course
+        <Button color="primary" outline className="w-50 mt-3" onClick={() => this.leaveCourse()}>
+          You joined this Course - Click to leave
         </Button>
       );
     // else if (!this.props.userInSession) return <Button primary disabled className="w-50 mt-3">Login to join this Course</Button>
     else
       return (
-        <Button primary className="w-50 mt-3" onClick={() => this.joinCourse()}>
+        <Button color="primary" className="w-50 mt-3" onClick={() => this.joinCourse()}>
           Join this Course
         </Button>
       );
@@ -80,14 +94,16 @@ class OfferDetail extends Component {
   }
 
   componentDidMount() {
+    // console.log("props",this.props)
     const { params } = this.props.match;
     this.setState({ offerId: params.id });
     // console.log("params:",params)
     this.getOfferDetails(params.id);
+    console.log("userInSession",this.props.userInSession)
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     let cardImage = this.state.theOffer.courseImage || defaultImage;
     return (
       <div>
@@ -98,26 +114,47 @@ class OfferDetail extends Component {
                 className="bg-secondary text-light mx-auto m-4"
                 src={cardImage}
                 alt={cardImage}
-                style={{ maxHeight: "25vh", maxWidth: "75vh", width: "auto", height:"auto" }}
+                style={{
+                  maxHeight: "25vh",
+                  maxWidth: "75vh",
+                  width: "auto",
+                  height: "auto"
+                }}
               />
               <CardBody>
-                <CardText>
+                <CardText tag="div">
                   <h2 className="text-primary mt-4">
                     {this.state.theOffer.courseTitle}
                   </h2>
                   <h5 className="my-3">{this.state.theOffer.courseType}</h5>
-                  <h5>Udemy Course: <a href={`https://www.udemy.com${this.state.theOffer.udemyUrl}`}>{`https://www.udemy.com${this.state.theOffer.udemyUrl}`}</a></h5> 
+                  <h5>
+                    Udemy Course:{" "}
+                    <a
+                      href={`https://www.udemy.com${
+                        this.state.theOffer.udemyUrl
+                      }`}
+                    >{`https://www.udemy.com${
+                      this.state.theOffer.udemyUrl
+                    }`}</a>
+                  </h5>
                   <h5>
                     Trainer:{" "}
                     {this.state.theOffer.ownerProfileLink && (
-                      <Link to={this.state.theOffer.ownerProfileLink}>
-                        {this.state.theOffer.courseOwner}
-                      </Link>
+                      <span>
+                        <Link to={this.state.theOffer.ownerProfileLink}>
+                          {this.state.theOffer.courseOwner}
+                        </Link>
+                        <span> </span>
+                        {this.state.theOffer.isJoined && (
+                        <a href={`mailto://${this.state.theOffer.ownerEmail}`}>
+                          {`<${this.state.theOffer.ownerEmail}>`}
+                        </a>
+                        )}
+                      </span>
                     )}
                   </h5>
                   <h5 className="mt-4">Description:</h5>
-                  <div className="mt-2" className="plainText">
-                    {/* <pre>{this.state.theOffer.courseDetails}</pre> */}
+                  <div className="mt-2 plaintext">
                     {this.state.theOffer.courseDetails}
                   </div>
                   <h5 className="mt-4">Time and place:</h5>

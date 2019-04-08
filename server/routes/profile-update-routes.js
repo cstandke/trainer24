@@ -17,6 +17,7 @@ profileUpdateRoutes.post("/profile/edit", (req, res, next) => {
         $set: {
           firstname: req.body.firstName,
           lastname: req.body.lastName,
+          email: req.body.email,
           occupation: req.body.occupation,
           description: req.body.description,
           imageUrl: req.body.imageUrl
@@ -64,6 +65,7 @@ profileUpdateRoutes.get("/:id", (req, res, next) => {
       res.status(200).json({
         firstName: theUser.firstname,
         lastName: theUser.lastname,
+        email: theUser.email,
         description: theUser.description,
         occupation: theUser.occupation,
         imageUrl: theUser.imageUrl

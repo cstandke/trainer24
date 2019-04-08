@@ -35,6 +35,8 @@ let courseResult = function(
   if (owner) {
     this.courseOwner = owner.firstname + " " + owner.lastname;
     this.ownerProfileLink = "/profile/" + owner._id;
+    if (isJoined) this.ownerEmail=owner.email 
+    else this.ownerEmail="";
   } else this.courseOwner = "Nobody";
   this.courseFile = fileUrl;
   this.udemyId = udemyId;
@@ -47,7 +49,6 @@ offers.post("/create", (req, res, next) => {
   console.log("AT create offer", req.body);
   const { offername, offertype, offerdescription, location, imageUrl, fileUrl, udemyId, udemyUrl, udemyTitle } = req.body;
   const offerowner = req.body.loggedInUser._id;
-
   const aNewOffer = new Offer({
     offername: offername,
     offertype: offertype,
@@ -61,6 +62,11 @@ offers.post("/create", (req, res, next) => {
     offerowner: offerowner
   });
 
+  if (!offername || (offername ==="")) {
+    res.status(400).json({message: "Please put in a title for your offer!"});
+    return
+  }
+
   //use promise syntax here
   aNewOffer
     .save()
@@ -72,7 +78,7 @@ offers.post("/create", (req, res, next) => {
     .catch(err => {
       console.log(err);
       res.status(400).json({
-        error: err
+        message: err
       });
     });
 
@@ -142,7 +148,6 @@ offers.post("/imageupload", uploader.single("imageUrl"), (req, res, next) => {
 offers.post("/join", (req, res, next) => {
   const aNewParticipant = new CourseParticipant({
     courseId: req.query.courseId,
-    // participantId:req.query.userId
     participantId: req.user._id
   });
   if (!aNewParticipant.courseId || !aNewParticipant.participantId)
@@ -162,6 +167,27 @@ offers.post("/join", (req, res, next) => {
     })
     .catch(err => res.status(400).json({ error: err }));
   }).catch(err => res.status(400).json({ error: err }));
+  // res.send(aNewMember);
+});
+
+offers.post("/leave", (req, res, next) => {
+  const aNewParticipant = new CourseParticipant({
+    courseId: req.query.courseId,
+    participantId: req.user._id
+  });
+  if (!aNewParticipant.courseId || !aNewParticipant.participantId)
+    return res
+      .status(400)
+      .json({ error: "All requrired fields must be filled!" });
+  CourseParticipant.findOneAndDelete({
+    courseId: req.query.courseId,
+    participantId: req.user._id
+  })
+  .then(deletedRecord => {
+    if (deletedRecord) return res.status(200).json({record:deletedRecord})
+    else return res.status(400).json({message:"Nothing to delete!"})
+    })
+  .catch(err => res.status(400).json({ error: err }));
   // res.send(aNewMember);
 });
 

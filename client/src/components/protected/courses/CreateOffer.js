@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import OfferService from "./OfferService";
 import defaultImage from "../../images/course.png";
-import htmlToText from "html-to-text"
+import htmlToText from "html-to-text";
+import {Redirect} from "react-router-dom";
 
 import {
   Col,
@@ -11,7 +12,8 @@ import {
   Label,
   Input,
   FormText,
-  Container
+  Container,
+  Alert
 } from "reactstrap";
 
 class CreateCourse extends Component {
@@ -25,15 +27,27 @@ class CreateCourse extends Component {
       location: "",
       imageUrl: undefined,
       fileUrl: undefined,
-      udemyId:"",
-      udemyUrl:"",
-      udemyTitle:"",
+      udemyId: "",
+      udemyUrl: "",
+      udemyTitle: "",
+      redirect: false
     };
     this.service = new OfferService();
     this.timeout = null;
     console.log(this.props);
     console.log(this.state);
   }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/dashboard" />;
+    }
+  };
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -71,11 +85,12 @@ class CreateCourse extends Component {
           location: "",
           imageUrl: undefined,
           fileUrl: undefined,
-          udemyId:"",
-          udemyUrl:"",
-          udemyTitle:""
+          udemyId: "",
+          udemyUrl: "",
+          udemyTitle: ""
         });
         document.getElementById("courseForm").reset();
+        this.setRedirect();
       })
       .catch(error => {
         console.log(error.response);
@@ -128,26 +143,27 @@ class CreateCourse extends Component {
 
   importUdemyData = e => {
     let { name, value } = e.target;
-    let delay = 1500
-    clearTimeout(this.timeout)
-    this.setState({ [name]: value })
+    let delay = 1500;
+    clearTimeout(this.timeout);
+    this.setState({ [name]: value });
     this.timeout = setTimeout(() => {
       // console.log("State change!");
-      this.service.getUdemyData(this.state.udemyUrl)
-      .then(response => {
-        if (response.message) return 
-        console.log(response.data)
-        this.setState({udemyId:response.data.id})
-        this.setState({udemyTitle:response.data.title})
-        if (this.state.offername==="") this.setState({offername:response.data.title})
-        if (this.state.offerdescription==="") this.setState({
-          offerdescription:htmlToText.fromString(response.data.description)
-        })
-        this.setState({imageUrl:response.data.image_480x270})
-        this.setState({udemyUrl:response.data.url})
-      })
-    },delay);
-  }
+      this.service.getUdemyData(this.state.udemyUrl).then(response => {
+        if (response.message) return;
+        console.log(response.data);
+        this.setState({ udemyId: response.data.id });
+        this.setState({ udemyTitle: response.data.title });
+        if (this.state.offername === "")
+          this.setState({ offername: response.data.title });
+        if (this.state.offerdescription === "")
+          this.setState({
+            offerdescription: htmlToText.fromString(response.data.description)
+          });
+        this.setState({ imageUrl: response.data.image_480x270 });
+        this.setState({ udemyUrl: response.data.url });
+      });
+    }, delay);
+  };
 
   handleChange = event => {
     let { name, value } = event.target;
@@ -161,6 +177,7 @@ class CreateCourse extends Component {
     };
     return (
       <div>
+        {this.renderRedirect()}
         <Form id="courseForm" onSubmit={this.handleFormSubmit}>
           <Container className="my-5 text-center">
             <h2 className="text-center">Create a new offer</h2>
@@ -185,13 +202,9 @@ class CreateCourse extends Component {
                 />
               </Col>
             </FormGroup>
-            <p>
-              your selection > here add component to search courses from udemy
-              that you want to create an offer for
-            </p>
             <FormGroup row>
               <Label for="udemyUrl" sm={2}>
-               Udemy course url:
+                Udemy course url:
               </Label>
               <Col sm={10}>
                 <Input
@@ -238,7 +251,7 @@ class CreateCourse extends Component {
                 </Input>
               </Col>
             </FormGroup>
-           {/*  <FormGroup>
+            {/*  <FormGroup>
               <Label for="exampleSelect">Select</Label>
             </FormGroup> */}
 
@@ -287,7 +300,7 @@ class CreateCourse extends Component {
                 </FormText>
               </Col>
             </FormGroup>
-            
+
             {/* <FormGroup row>
             <Label for="checkbox2" sm={2}>
               Checkbox
@@ -300,6 +313,11 @@ class CreateCourse extends Component {
               </FormGroup>
             </Col>
           </FormGroup> */}
+            {this.state.errorMessage && (
+              <Alert color="warning" className="text-center">
+                {this.state.errorMessage}
+              </Alert>
+            )}
             <FormGroup check row className="mb-5">
               <Col className="text-center">
                 <Button type="submit" outline color="primary">

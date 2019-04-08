@@ -20,11 +20,12 @@ class UpdateProfileService {
       });
   }
 
-  editProfile(firstName, lastName, occupation, description, imageUrl) {
+  editProfile(firstName, lastName, email, occupation, description, imageUrl) {
     return this.service
       .post("/users/profile/edit", {
         firstName,
         lastName,
+        email,
         occupation,
         description,
         imageUrl
