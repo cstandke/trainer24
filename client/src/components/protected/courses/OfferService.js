@@ -60,6 +60,12 @@ class OfferService {
     .catch(err => err)
   }
 
+  leaveCourse(offerId) {
+    return this.service.post(`/offers/leave?courseId=${offerId}`)
+    .then(response => response)
+    .catch(err => err)
+  }
+
   getUdemyData(urlString) {
     return this.service.get(`/offers/udemyCourseInfo?search=${urlString}`)
     .then (response => response)

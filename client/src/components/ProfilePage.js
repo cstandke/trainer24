@@ -140,7 +140,7 @@ class ProfilePage extends Component {
 
   render() {
     console.log(this.props.userInSession._id, this.props.match.params.id);
-    console.log(this.state.theUser);
+    // console.log(this.state.theUser);
     let profileImage = this.state.theUser.imageUrl || defaultImage;
     let cardImageStyle = {
       maxWidth: "100%",
@@ -195,6 +195,13 @@ class ProfilePage extends Component {
                   <h4 className="text-secondary my-2">
                     {this.state.theUser.occupation}
                   </h4>
+                  {this.props.userInSession._id ===
+                    (this.props.match.params.id ||
+                      this.props.userInSession._id) && (
+                    <h4 className="text-secondary my-2">
+                      {this.state.theUser.email}
+                    </h4>
+                  )}
                   <p className="text-secondary mt-3">
                     {this.state.theUser.description}
                   </p>

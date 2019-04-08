@@ -7,7 +7,6 @@ import {
   Row,
   Card,
   CardBody,
-  CardText,
   CardImg,
   Col
 } from "reactstrap";
@@ -85,8 +84,7 @@ class Signup extends Component {
                     alt="Image"
                   />
                 </div>
-                <CardBody style={{ minWidth: "400px" }}>
-                  <CardText>
+                <CardBody>
                     <h2>Create your account</h2>
                     <form
                       className="form-signin"
@@ -154,10 +152,9 @@ class Signup extends Component {
                       <Alert color="warning">{this.state.errorMessage}</Alert>
                     )}
                     <p>
-                      Already have account? <br />
+                      Already have an account? <br />
                       <Link to={"/login"}>Login</Link>
                     </p>
-                  </CardText>
                 </CardBody>
               </Card>
             </Col>

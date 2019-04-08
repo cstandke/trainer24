@@ -59,6 +59,7 @@ export default function contentEditable(WrappedContent) {
         case "Escape":
           this.save();
           break;
+        default: break;
       }
     };
 
