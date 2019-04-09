@@ -156,7 +156,7 @@ class OfferDetail extends Component {
                     )}
                   </h5>
                   <h5 className="mt-4">Description:</h5>
-                  <div className="mt-2 plaintext">
+                  <div className="mt-2 plainText">
                     {this.state.theOffer.courseDetails}
                   </div>
                   <h5 className="mt-4">Time and place:</h5>
