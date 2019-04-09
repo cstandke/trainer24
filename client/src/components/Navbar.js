@@ -79,6 +79,9 @@ class TheNavbar extends Component {
                   Home <span className="sr-only">(current)</span>
                 </NavLink>
               </NavItem>
+                <NavItem>
+                  <NavLink href="/browse">Browse</NavLink>
+                </NavItem>
               {!this.state.loggedInUser && (
                 <NavItem>
                   <NavLink href="/login">Login</NavLink>

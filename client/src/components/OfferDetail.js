@@ -127,6 +127,7 @@ class OfferDetail extends Component {
                     {this.state.theOffer.courseTitle}
                   </h2>
                   <h5 className="my-3">{this.state.theOffer.courseType}</h5>
+                  {this.state.theOffer.udemyUrl && (
                   <h5>
                     Udemy Course:{" "}
                     <a
@@ -137,6 +138,7 @@ class OfferDetail extends Component {
                       this.state.theOffer.udemyUrl
                     }`}</a>
                   </h5>
+                  )}
                   <h5>
                     Trainer:{" "}
                     {this.state.theOffer.ownerProfileLink && (

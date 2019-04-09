@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { Jumbotron, Button, Container, Row, Col } from "reactstrap";
+import { Jumbotron, Button, Container, Row, Col, FormGroup, Form, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import CourseCard from "./CourseCard";
 import axios from "axios";
 // import Hero from "../images/hero.png";
 
-class HomePage extends Component {
+class BrowseOffers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardArray: []
+      cardArray: [],
+      searchTerm: ""
     };
   }
 
@@ -24,7 +25,8 @@ class HomePage extends Component {
       .then(courses => {
         // console.log(courses.data);
         // return courses.data.results;
-        const newCardArray = courses.data.splice(0,12).map((el, idx) => {
+        const newCardArray = courses.data.filter(el => el.courseTitle.toUpperCase().includes(this.state.searchTerm.toUpperCase()))
+          .map((el, idx) => {
           // let card = new Card(el.published_title, el.title, el.image_125_H);
           // return <CourseCard card={card} />;
           return (
@@ -37,6 +39,7 @@ class HomePage extends Component {
             />
           );
         });
+
         this.setState({ cardArray: newCardArray });
       })
       .catch(err => {
@@ -46,44 +49,44 @@ class HomePage extends Component {
   }
 
   cardSpace() {
-    // console.log(this.state.cardArray);
-    return <Row className="mb-4">{this.state.cardArray}</Row>;
+    console.log(this.state.cardArray);
+    if (this.state.cardArray.length === 0) return (
+      <Container className="text-center mb-4">
+      <h5>No results, please try again!</h5>
+      </Container>
+    )
+    else return <Row>{this.state.cardArray}</Row>;
   }
 
   componentDidMount() {
     this.getCourses();
   }
 
+  handleSearchEvent(e) {
+    this.setState({searchTerm:e.target.value});
+    // console.log("search term:",this.state.searchTerm)
+    this.getCourses();
+  }
+
   render() {
     return (
       <div>
-        <Jumbotron className="bg-white">
-          <div className="imageHolder" />
-          <h1 className="display-4">train!t</h1>
-          <p className="lead">Unlock your potential.</p>
-          {/* <hr className="my-4" /> */}
-          <p>
-            1:1 tutoring and study groups that enhance your learning
-            experiences.
-          </p>
-          <Button color="primary" size="lg" tag={Link} to="/browse" className="my-2">
-            Find your Course
-          </Button>
-        </Jumbotron>
-        <div className="mobileHero" />
+        <Form>
+          <FormGroup row>
+            {/* <Label for="searchbar" sm={2}>Search Courses</Label> */}
+            <Col sm={9} xs={9} className="mx-auto my-4 p-2">
+            <Input name="searchbar" placeholder="Search our Courses..." onChange={e=>this.handleSearchEvent(e)}></Input>
+            </Col>
+          </FormGroup>
+        </Form>
 
         <Container fluid={true} className="p-2">
-          <h2 className="display-5 ml-2 ml-4 mb-4">Check out our Classes:</h2>
+          {/* <h2 className="display-5 ml-2 ml-4 mb-4">Check out our classes:</h2> */}
           {this.cardSpace()}
-          <Container className="text-center">
-          <Button color="primary" outline size="lg" tag={Link} to="/browse" className="mt-4 w-50">
-            Browse to see more Courses
-          </Button>
-          </Container>
         </Container>
       </div>
     );
   }
 }
 
-export default HomePage;
+export default BrowseOffers;

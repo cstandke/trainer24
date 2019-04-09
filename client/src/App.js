@@ -10,6 +10,8 @@ import AuthService from "./components/auth/AuthService";
 import CreateOffer from "./components/protected/courses/CreateOffer";
 import OfferDetail from "./components/OfferDetail";
 import ProfilePageEdit from "./components/ProfilePageEdit";
+import BrowseOffers from "./components/BrowseOffers";
+import Footer from "./components/Footer";
 
 class App extends Component {
   constructor(props) {
@@ -50,14 +52,6 @@ class App extends Component {
           setUser={this.setTheUser}
         />
         <Switch>
-          {/* <Route exact path="/" render={() => (
-          loggedIn ? (
-             <Redirect to="/dashboard"/>
-              ) : (
-               <Homepage/>
-              )
-            )}/> */}
-          {/* <Route exact path="/" component={Homepage} /> */}
           <Route
             exact
             path="/login"
@@ -89,24 +83,6 @@ class App extends Component {
             )}
           />
 
-          {/* <Route
-            exact
-            path="/profile/:id"
-            render={() =>
-              // don't use this to redirect users ->
-              this.state.loggedInUser ? (
-                <ProfilePage userInSession={this.state.loggedInUser} />
-              ) : (
-                <h3>No access. Please login or signup.</h3>
-              )
-            }
-          /> */}
-          {/* <Route
-            exact
-            path="/profile/:id"
-            component={ProfilePage}
-            userInSession={this.state.loggedInUser}
-          /> */}
           <Route
             exact
             // path="/profile/:id/edit"
@@ -157,6 +133,12 @@ class App extends Component {
           />
           <Route
             exact
+            path="/browse"
+            component={BrowseOffers}
+            userInSession={this.state.loggedInUser}
+          />
+          <Route
+            exact
             path="/OfferDetail/:id"
             component={OfferDetail}
             userInSession={this.state.loggedInUser}
@@ -164,6 +146,7 @@ class App extends Component {
 
           <Route exact path="/" component={Homepage} />
         </Switch>
+        <Footer />
       </div>
     );
   }

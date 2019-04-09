@@ -153,9 +153,9 @@ class CreateCourse extends Component {
         console.log(response.data);
         this.setState({ udemyId: response.data.id });
         this.setState({ udemyTitle: response.data.title });
-        if (this.state.offername === "")
+        // if (this.state.offername === "")
           this.setState({ offername: response.data.title });
-        if (this.state.offerdescription === "")
+        // if (this.state.offerdescription === "")
           this.setState({
             offerdescription: htmlToText.fromString(response.data.description)
           });
