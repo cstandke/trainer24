@@ -119,7 +119,7 @@ class ProfilePage extends Component {
 
   myOffersSpace() {
     // console.log(this.state.cardArray);
-    return <Row>{this.state.myOffersArray}</Row>;
+    return <Row>{this.state.myOffersArray}</Row>
   }
 
   myCoursesSpace() {
@@ -132,7 +132,7 @@ class ProfilePage extends Component {
         <div>
           <hr className="mt-5 mb-5" />
           <h2> My joined Courses</h2>
-          <Row>{this.state.myCoursesArray}</Row>;
+          <Row>{this.state.myCoursesArray}</Row>
         </div>
       );
     }
@@ -217,7 +217,7 @@ class ProfilePage extends Component {
           {this.myCoursesSpace()}
         </Container>
       </div>
-    );
+    )
   }
 }
 export default withRouter(ProfilePage);
