@@ -11,7 +11,7 @@ study groups or 1:1 tutoring specially for those online courses. Tutors can add 
 existing learning materials. 
 
 Commands
-To download
+
 To clone
 
 $ git clone
